@@ -56,6 +56,7 @@ int main(int argc, char** argv) {
         if (i == 0 || j == 0 || k == 0 || i == N-1 || j == N-1 || k == N-1) n[I(i,j,k)] = {0, 0, 1};
     }
     if (argc > 5) { FILE* r = fopen(argv[5], "rb"); int N2; double L2;
+        if (!r) { fprintf(stderr, "no encuentro el fichero de continuación %s (¿está en esta carpeta?)\n", argv[5]); return 1; }
         if (!r || fread(&N2, sizeof N2, 1, r) != 1 || fread(&L2, sizeof L2, 1, r) != 1 || N2 != N || fabs(L2 - L) > 1e-9) {
             fprintf(stderr, "el fichero de continuación no coincide en N o L\n"); return 1; }
         if (fread(n.data(), sizeof(V), n.size(), r) != n.size()) { fprintf(stderr, "fichero incompleto\n"); return 1; }
