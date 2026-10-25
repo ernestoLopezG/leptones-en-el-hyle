@@ -1,0 +1,128 @@
+// hopfion_quiral.cpp — Paso 2c: hopfión SIN término de cuarto orden, con QUIRALIDAD del hyle  († Claude, 20-10-2026)
+//   E = ∫ [ ∂n·∂n  +  C4·½F²  +  2q·n·(∇×n)  +  k²(1 − n_z²)  +  k²|∇n_z|² ]
+//        Frank      (cuarto orden,  quiralidad   masa KK del giro en η  (rigidez extra del giro)
+//                    C4=0 lo quita)  (q y −q: los dos sentidos)
+//   Derrick: Frank ∝ λ, quiral ∝ λ² (puede ser negativo), masa ∝ λ³  ->  puede haber mínimo sin C4.
+//   Uniforme estable frente a la hélice si k² > q² (aprox.).  Uso: C4=0 Q0=0.8 K=1 ./hopfion_quiral N L a iter
+// Basado en hopfion_eta.cpp — Paso 2b: hopfión con la DIRECCIÓN COMPACTA η  († Claude, 20-10-2026)
+//   Hipótesis [H]: al avanzar a lo largo de η, el director gira sobre sí mismo alrededor de la dirección de reposo ẑ,
+//   p vueltas por vuelta de η:   n(x, η) = R_ẑ(k·η) · n₃(x) ,   k = p/R_ξ   (giro fijo impreso por la circulación compacta).
+//   Reducción exacta a 3D [D]:  ∂_η n = k (ẑ × n),  |∂_η n|² = k²(1 − n_z²),  F_iη = n·(∂_i n × ∂_η n) = −k ∂_i n_z
+//   Energía por unidad de longitud en η:
+//     E = ∫ [ ∂n·∂n + ½F_ijF_ij  +  k²(1 − n_z²)  +  k²|∇n_z|² ]
+//          E2         E4            Et2 (masa KK)    Et4 (rigidez extra)
+//   Virial (escala λ): E2 − E4 + 3·Et2 + Et4 = 0 en la solución.   Uso: K=1.0 ./hopfion_eta N L a iter [continuar.bin]
+// Basado en hopfion.cpp — Paso 1: hopfión de referencia (modelo de Faddeev–Skyrme), validado el 19-10 (E/(32√2π²) = 1,219)
+//
+// Campo: director unitario n(x,y,z) ∈ S² (en el hyle: la orientación del director).
+// Energía (Faddeev–Skyrme; convención de Battye y Sutcliffe):
+//     E = ∫ [ ∂_i n·∂_i n  +  ½ F_ij F_ij ] d³x ,   F_ij = n·(∂_i n × ∂_j n)
+//   2.º término = término de cuarto orden (tipo Skyrme / nuestro K): frena el colapso.
+//   Referencia: en la normalización E/(32√2π²), E(Q=1) ≈ 1,21 (Sutcliffe, Proc. R. Soc. A 463, 3001 (2007), arXiv:0705.1468).
+//   (El valor 504 de Battye y Sutcliffe, PRL 81, 4798 (1998), malla 100³, resultó ser una subestimación.)
+//   Comprobación independiente de la norma: en el mínimo, E2 = E4 (teorema del virial / Derrick).
+// Método: flujo de gradiente proyectado sobre la esfera; n fijo = (0,0,1) en el borde.
+// Arranque: mapa de Hopf de carga 1, tamaño a.
+// Uso: ./hopfion N L a iter [continuar.bin]   (malla N³ en [−L/2, L/2]³; con .bin continúa desde ese estado,
+//      que debe tener la misma N y L). Cada 2000 iteraciones guarda n_final_N<N>.bin (se puede cortar y seguir).
+//    salida: hopf_N<N>.dat (iter E2 E4 E/(32√2π²) E2/E4)
+//      y n_final_N<N>.bin para calcular Q con hopfq.py
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+#include <vector>
+#include <omp.h>
+using namespace std;
+struct V { double x, y, z; };
+inline V operator+(V a, V b) { return {a.x+b.x, a.y+b.y, a.z+b.z}; }
+inline V operator-(V a, V b) { return {a.x-b.x, a.y-b.y, a.z-b.z}; }
+inline V operator*(double s, V a) { return {s*a.x, s*a.y, s*a.z}; }
+inline double dot(V a, V b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
+inline V cross(V a, V b) { return {a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x}; }
+int N; double h;
+inline size_t I(int i, int j, int k) { return ((size_t)i*N + j)*N + k; }
+int main(int argc, char** argv) {
+    const double KK = getenv("K") ? atof(getenv("K")) : 0.0, k2 = KK*KK;
+    const double C4 = getenv("C4") ? atof(getenv("C4")) : 1.0, q0 = getenv("Q0") ? atof(getenv("Q0")) : 0.0;
+    N = atoi(argv[1]); double L = atof(argv[2]), a = atof(argv[3]); int iters = atoi(argv[4]);
+    h = L/(N-1);
+    vector<V> n(N*N*N), G(N*N*N); vector<V> d[3]; for (auto& v : d) v.resize(N*N*N);
+    for (int i = 0; i < N; i++) for (int j = 0; j < N; j++) for (int k = 0; k < N; k++) {
+        double x = (-L/2 + i*h)/a, y = (-L/2 + j*h)/a, z = (-L/2 + k*h)/a, r2 = x*x + y*y + z*z;
+        double u1 = 2*x/(1+r2), u2 = 2*y/(1+r2), u3 = 2*z/(1+r2), u4 = (r2-1)/(1+r2);   // R³ -> S³
+        double z1r = u1, z1i = u2, z0r = u4, z0i = u3;                                 // Z1 = u1+iu2, Z0 = u4+iu3
+        double re = z1r*z0r + z1i*z0i, im = z1i*z0r - z1r*z0i, m1 = z1r*z1r + z1i*z1i, m0 = z0r*z0r + z0i*z0i;
+        n[I(i,j,k)] = {2*re/(m0+m1), 2*im/(m0+m1), (m0-m1)/(m0+m1)};
+        if (i == 0 || j == 0 || k == 0 || i == N-1 || j == N-1 || k == N-1) n[I(i,j,k)] = {0, 0, 1};
+    }
+    if (argc > 5) { FILE* r = fopen(argv[5], "rb"); int N2; double L2;
+        if (!r) { fprintf(stderr, "no encuentro el fichero de continuación %s (¿está en esta carpeta?)\n", argv[5]); return 1; }
+        if (!r || fread(&N2, sizeof N2, 1, r) != 1 || fread(&L2, sizeof L2, 1, r) != 1 || N2 != N || fabs(L2 - L) > 1e-9) {
+            fprintf(stderr, "el fichero de continuación no coincide en N o L\n"); return 1; }
+        if (fread(n.data(), sizeof(V), n.size(), r) != n.size()) { fprintf(stderr, "fichero incompleto\n"); return 1; }
+        fclose(r); printf("continuando desde %s\n", argv[5]); }
+    auto guarda = [&]() { char nb[96]; snprintf(nb, sizeof nb, "n_q_N%d_K%g_C%g_q%g.bin", N, KK, C4, q0); FILE* b = fopen(nb, "wb");
+        fwrite(&N, sizeof N, 1, b); fwrite(&L, sizeof L, 1, b); fwrite(n.data(), sizeof(V), n.size(), b); fclose(b); };
+    char nom[64]; snprintf(nom, sizeof nom, "hq_N%d_K%g_C%g_q%g.dat", N, KK, C4, q0); FILE* f = fopen(nom, argc > 5 ? "a" : "w");
+    fprintf(f, "# N=%d L=%g a=%g h=%g\n# iter E2 E4 Et2 Et4 Echiral Etotal virial\n", N, L, a, h);
+    const double norma = 32*sqrt(2.0)*M_PI*M_PI, tau = 0.1*h*h/(1 + 8.0/(h*h)*0.0 + 4.0);
+    double E2 = 0, E4 = 0;
+    // Paso de tiempo: arranca en min(0,02; 0,6/(12(1+k²)))·h² (o DTAU) y se reduce solo si la energía sube (ver hopfion_eta.cpp).
+    double fdt = getenv("DTAU") ? atof(getenv("DTAU")) : std::min(0.02, 0.6/(12*(1 + k2)));
+    double Eprev = 1e300; std::vector<V> nprev = n;
+    for (int it = 0; it <= iters; it++) {
+        // derivadas centrales
+        #pragma omp parallel for collapse(2)
+        for (int i = 1; i < N-1; i++) for (int j = 1; j < N-1; j++) for (int k = 1; k < N-1; k++) {
+            size_t c = I(i,j,k);
+            d[0][c] = (0.5/h)*(n[I(i+1,j,k)] - n[I(i-1,j,k)]);
+            d[1][c] = (0.5/h)*(n[I(i,j+1,k)] - n[I(i,j-1,k)]);
+            d[2][c] = (0.5/h)*(n[I(i,j,k+1)] - n[I(i,j,k-1)]);
+        }
+        // flujo de "corriente" W_i = Σ_j F_ij (∂_j n × n), y energía
+        vector<V> W[3]; for (auto& v : W) v.assign(N*N*N, {0,0,0});
+        E2 = 0; E4 = 0; double Et2 = 0, Et4 = 0, Ech = 0;
+        #pragma omp parallel for collapse(2) reduction(+:E2,E4,Et2,Et4,Ech)
+        for (int i = 1; i < N-1; i++) for (int j = 1; j < N-1; j++) for (int k = 1; k < N-1; k++) {
+            size_t c = I(i,j,k); V nn = n[c];
+            double F[3][3];
+            for (int p = 0; p < 3; p++) for (int q = 0; q < 3; q++) F[p][q] = dot(nn, cross(d[p][c], d[q][c]));
+            for (int p = 0; p < 3; p++) { V s = {0,0,0};
+                for (int q = 0; q < 3; q++) s = s + F[p][q]*cross(d[q][c], nn);
+                W[p][c] = s; E2 += dot(d[p][c], d[p][c]); }
+            E4 += F[0][1]*F[0][1] + F[0][2]*F[0][2] + F[1][2]*F[1][2];   // ½ Σ_ij F_ij² = Σ_{i<j} F_ij²
+            { V curl = {d[1][c].z - d[2][c].y, d[2][c].x - d[0][c].z, d[0][c].y - d[1][c].x}; Ech += 2*q0*dot(nn, curl); }
+            Et2 += k2*(1 - nn.z*nn.z); Et4 += k2*(d[0][c].z*d[0][c].z + d[1][c].z*d[1][c].z + d[2][c].z*d[2][c].z);
+        }
+        E2 *= h*h*h; E4 *= C4*h*h*h; Et2 *= h*h*h; Et4 *= h*h*h; Ech *= h*h*h; double Et = E2 + E4 + Et2 + Et4 + Ech, vir = (E2 - E4 + 3*Et2 + Et4 + 2*Ech)/fabs(Et);
+        if (it > 0 && Et > Eprev + 1e-9*fabs(Eprev)) {   // la energía ha subido: paso inestable → deshacer y reducir a la mitad
+            fdt *= 0.5; n = nprev; fprintf(stderr, "it %d: la energía sube (%.4f -> %.4f); deshago el paso y bajo dtau a %.5f·h²\n", it, Eprev, Et, fdt);
+            if (fdt < 1e-5) { fprintf(stderr, "dtau demasiado pequeño: algo va mal, paro\n"); return 2; }
+            it--; continue; }
+        Eprev = Et; nprev = n;
+        if (it % 200 == 0) { fprintf(f, "%d %.4f %.4f %.4f %.4f %.4f %.4f %.4f\n", it, E2, E4, Et2, Et4, Ech, Et, vir); fflush(f);
+            if (it % 2000 == 0) printf("it %6d  E2 %.2f E4 %.2f Et2 %.2f Et4 %.2f Ech %.2f  E %.2f  virial %.4f\n", it, E2, E4, Et2, Et4, Ech, Et, vir); }
+        if (it == iters) break;
+        if (it > 0 && it % 2000 == 0) guarda();
+        // gradiente: G = −2∇²n − 2 ∂_i W_i ; paso proyectado
+        #pragma omp parallel for collapse(2)
+        for (int i = 1; i < N-1; i++) for (int j = 1; j < N-1; j++) for (int k = 1; k < N-1; k++) {
+            size_t c = I(i,j,k);
+            V lap = (1/(h*h))*(n[I(i+1,j,k)] + n[I(i-1,j,k)] + n[I(i,j+1,k)] + n[I(i,j-1,k)] + n[I(i,j,k+1)] + n[I(i,j,k-1)] - 6.0*n[c]);
+            V divW = (0.5/h)*(W[0][I(i+1,j,k)] - W[0][I(i-1,j,k)] + W[1][I(i,j+1,k)] - W[1][I(i,j-1,k)] + W[2][I(i,j,k+1)] - W[2][I(i,j,k-1)]);
+            double lapz = (n[I(i+1,j,k)].z + n[I(i-1,j,k)].z + n[I(i,j+1,k)].z + n[I(i,j-1,k)].z + n[I(i,j,k+1)].z + n[I(i,j,k-1)].z - 6*n[c].z)/(h*h);
+            V curl = {(0.5/h)*(n[I(i,j+1,k)].z - n[I(i,j-1,k)].z - n[I(i,j,k+1)].y + n[I(i,j,k-1)].y),
+                      (0.5/h)*(n[I(i,j,k+1)].x - n[I(i,j,k-1)].x - n[I(i+1,j,k)].z + n[I(i-1,j,k)].z),
+                      (0.5/h)*(n[I(i+1,j,k)].y - n[I(i-1,j,k)].y - n[I(i,j+1,k)].x + n[I(i,j-1,k)].x)};
+            V g = -2.0*lap - (2.0*C4)*divW + (4*q0)*curl; g.z += -2*k2*n[c].z - 2*k2*lapz; g = g - dot(g, n[c])*n[c];
+            G[c] = g;
+        }
+        double dtau = fdt*h*h;
+        #pragma omp parallel for collapse(2)
+        for (int i = 1; i < N-1; i++) for (int j = 1; j < N-1; j++) for (int k = 1; k < N-1; k++) {
+            size_t c = I(i,j,k); V m = n[c] - dtau*G[c]; n[c] = (1/sqrt(dot(m,m)))*m; }
+    }
+    fclose(f);
+    guarda();
+    printf("final K=%g C4=%g q=%g\n", KK, C4, q0);
+}
