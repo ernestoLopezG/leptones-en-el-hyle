@@ -98,6 +98,21 @@ RIN=2 python3 cola_angular.py n_eta_N150_K1.bin
 
 Resultado esperado: a2/a0 ≈ −1,00 desde r ≈ 3 con k = 0 y k = 0,1; con k = 1, a2/a0 ≈ −1,08 y a4/a0 ≈ +0,09, un octupolo de un 0,8 % que decae como k₃(kr)/k₁(kr).
 
+**Reparto de la energía del flujo** (poloidal frente a toroidal, en el mapa de Hopf analítico y en los .bin):
+
+```
+python3 reparto_flujo.py n_final_N150.bin n_eta_N150_K0.5.bin n_eta_N150_K1.bin
+```
+
+Resultado: el mapa analítico tiende a 0,50 / 0,50 al afinar la malla; el hopfión da 0,658 de poloidal con k = 0, 0,667 con k = 0,5 y 0,679 con k = 1. El reparto depende de la forma del mínimo de energía, no de la topología.
+
+**Figuras ilustrativas** (campos analíticos, no la simulación):
+
+```
+python3 figura_cola_dipolar.py    # cola de Yukawa dipolar alrededor de un nudo pequeño
+python3 figura_espin_flujo.py     # líneas de flujo para espín +½, −½ e imagen especular, con su enlace
+```
+
 **Factor g orbital del director** (el cálculo corregido, que da g = 1):
 
 ```
