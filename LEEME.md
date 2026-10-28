@@ -33,7 +33,7 @@ Todo es adimensional.
 | `2_umbral` | `umbral.cpp` (estática con umbral inferior tipo Bingham), `evolucion.cpp` (frecuencia libre), `anclada.cpp` (frecuencia anclada), `derrick.cpp` (sin umbral), `cargafija.cpp` y `arrastre.cpp` (pruebas auxiliares) | Sección 4, filas 1 y 2 |
 | `3_giro` | `giro.cpp`, `giro_anc.cpp`: envolvente que gira en un plano de las extendidas | Sección 4, fila 4 |
 | `4_cuartico` | `cuartico.cpp`: solitón de umbral con término de cuarto orden, sin topología | Sección 4, fila 3 |
-| `5_hopfion` | `hopfion.cpp`, `hopfion_eta.cpp`, `hopfion_quiral.cpp` y los análisis en Python | Sección 3; sección 4, fila 5; errores corregidos |
+| `5_hopfion` | `hopfion.cpp`, `hopfion_eta.cpp`, `hopfion_quiral.cpp`, `hopfion_P.cpp` y los análisis en Python | Sección 3; sección 4, filas 5 y 6; errores corregidos |
 
 ## Reproducir los resultados de la sección 3
 
@@ -131,6 +131,8 @@ Los argumentos de estas órdenes son ejemplos; las cabeceras explican cada pará
 ./cuartico 1 1 0.3 0 200                # término de cuarto orden sin topología
 ./giro 1 12 2 200 1                     # giro en un plano (ANCLADA=1 ./giro_anc ... para la versión anclada)
 K=1 C4=0 Q0=0.8 ./hopfion_quiral 100 8 1.0 20000    # quiralidad en lugar del cuarto orden: el nudo se deshace
+K=1 S=0 C4=1 ./hopfion_P 81 6 0.9 2000              # control: reproduce el nudo con giro (Q ≈ −0,97)
+K=1 S=90 C4=0 ./hopfion_P 81 6 0.9 8000 n_P_N81_K1_S0_C1.bin   # giro en el tiempo sin cuarto orden: ω sube a ≈ 1,7 > k y el nudo se deshace (Q → 0)
 ```
 
 ## Formato de los ficheros `.bin`
@@ -149,7 +151,7 @@ Los tres programas de hopfión guardan el `.bin` cada 2000 iteraciones. Para con
 - **Virial:** en el mínimo sin giro, E2/E4 → 1. Con giro, E2 − E4 + 3·Et2 + Et4 → 0, que es la última columna de `hopfion_eta`.
 - **Cota de energía:** los términos del giro son positivos. Por eso, mientras Q = 1, la energía con giro nunca puede bajar de la de k = 0 (544). Si baja, el nudo se ha deshecho en la malla.
 - **Malla:** con h = L/(N − 1) mayor que unos 0,09 el nudo se deshace, incluso con k = 0.
-- **Paso de tiempo:** el flujo de gradiente es explícito. Con nudos pequeños (k grande), el término de cuarto orden exige pasos muy cortos. `hopfion_eta` y `hopfion_quiral` reducen el paso solos cuando la energía sube y lo avisan en pantalla. `DTAU=...` fija el paso inicial en unidades de h².
+- **Paso de tiempo:** el flujo de gradiente es explícito. Con nudos pequeños (k grande), el término de cuarto orden exige pasos muy cortos. `hopfion_eta`, `hopfion_quiral` y `hopfion_P` reducen el paso solos cuando la energía sube y lo avisan en pantalla. `DTAU=...` fija el paso inicial en unidades de h².
 - **k ≥ 2:** el nudo se contrae por debajo de lo que resuelven mallas con h ≈ 0,06 y se pierde. Es una limitación declarada en el preprint.
 - **Cola en la caja de lado 12:** con k = 0 y k = 0,5 la pared contamina el ajuste de la cola. Por ejemplo, k = 0 da un k_ef = 0,37 espurio.
 - **Ficheros `.dat` antiguos:** la columna de energía normalizada es ahora E/(32√2π²), en la normalización de Sutcliffe (2007). Los `.dat` generados antes de esta versión traían E/504.
