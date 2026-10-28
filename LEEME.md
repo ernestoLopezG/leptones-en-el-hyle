@@ -34,6 +34,7 @@ Todo es adimensional.
 | `3_giro` | `giro.cpp`, `giro_anc.cpp`: envolvente que gira en un plano de las extendidas | Sección 4, fila 4 |
 | `4_cuartico` | `cuartico.cpp`: solitón de umbral con término de cuarto orden, sin topología | Sección 4, fila 3 |
 | `5_hopfion` | `hopfion.cpp`, `hopfion_eta.cpp`, `hopfion_quiral.cpp`, `hopfion_P.cpp` y los análisis en Python | Sección 3; sección 4, filas 5 y 6; errores corregidos |
+| `6_mathieu` | `mathieu_q.py`: funciones angulares de Mathieu con q negativo (método de Hill) | Sección 2, figura de los pozos |
 
 ## Reproducir los resultados de la sección 3
 
@@ -113,10 +114,24 @@ python3 figura_cola_dipolar.py    # cola de Yukawa dipolar alrededor de un nudo 
 python3 figura_espin_flujo.py     # líneas de flujo para espín +½, −½ e imagen especular, con su enlace
 ```
 
+**Precesión del eje bajo un campo externo** (figura de la sección 5, punto 3):
+
+```
+python3 precesion_hopfion.py n_final_N150.bin 30    # el último número es el ángulo del cono en grados
+```
+
 **Factor g orbital del director** (el cálculo corregido, que da g = 1):
 
 ```
 python3 gfactor.py n_final_N150.bin
+```
+
+## Funciones de Mathieu (sección 2)
+
+En la carpeta `6_mathieu`:
+
+```
+python3 mathieu_q.py    # → mathieu_q_negativo.png, con q = −10, −100 y −1000
 ```
 
 ## Reproducir la sección 4 (vías descartadas)
