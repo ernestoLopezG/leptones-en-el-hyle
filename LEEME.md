@@ -35,6 +35,18 @@ Todo es adimensional.
 | `4_cuartico` | `cuartico.cpp`: solitón de umbral con término de cuarto orden, sin topología | Sección 4, fila 3 |
 | `5_hopfion` | `hopfion.cpp`, `hopfion_eta.cpp`, `hopfion_quiral.cpp`, `hopfion_P.cpp` y los análisis en Python | Sección 3; sección 4, filas 5 y 6; errores corregidos |
 | `6_mathieu` | `mathieu_q.py`: funciones angulares de Mathieu con q negativo (método de Hill) | Sección 2, figura de los pozos |
+| `preprint` | `leptones_en_el_hyle.tex` (fuente LaTeX), `leptones_en_el_hyle.pdf` y las figuras en `figuras/` | El texto completo |
+
+## Compilar el preprint
+
+El texto está en `preprint/leptones_en_el_hyle.tex` y se compila con XeLaTeX (dos pasadas, para las referencias cruzadas):
+
+```
+sudo apt install texlive-xetex texlive-latex-extra texlive-lang-spanish texlive-science
+cd preprint
+xelatex leptones_en_el_hyle.tex
+xelatex leptones_en_el_hyle.tex
+```
 
 ## Reproducir los resultados de la sección 3
 
