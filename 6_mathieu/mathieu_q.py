@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# mathieu_q.py — funciones angulares de Mathieu para q negativo grande  († Claude, 23-10-2026)
+# mathieu_q.py — funciones angulares de Mathieu para q negativo grande  (Claude, 23-10-2026)
 # Ecuación: y'' + (a − 2q·cos 2η) y = 0.  Con q < 0 el potencial 2q·cos 2η tiene sus pozos en η = 0 y η = π.
 # Solución de Floquet de orden ν: y = Σ_k A_k · e^{i(2k+ν)η}  →  (a − (2k+ν)²) A_k − q (A_{k−1} + A_{k+1}) = 0  (método de Hill)
 # ν = 0 → ce₀ (periódica, periodo π);  ν = ½ → la del modelo (antiperiódica en una vuelta: y(η+2π) = −y(η)).

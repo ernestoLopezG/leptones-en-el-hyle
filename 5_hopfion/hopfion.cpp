@@ -1,4 +1,4 @@
-// hopfion.cpp — Paso 1: hopfión de referencia (modelo de Faddeev–Skyrme) para validar el método  († Claude, 19-10-2026)
+// hopfion.cpp — Paso 1: hopfión de referencia (modelo de Faddeev–Skyrme) para validar el método  (Claude, 19-10-2026)
 //
 // Campo: director unitario n(x,y,z) ∈ S² (en el hyle: la orientación del director).
 // Energía (Faddeev–Skyrme; convención de Battye y Sutcliffe):

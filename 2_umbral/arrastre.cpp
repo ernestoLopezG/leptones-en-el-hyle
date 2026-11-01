@@ -1,7 +1,7 @@
 // arrastre.cpp — evolucion.cpp + ARRASTRE de las compactadas: término −γ(ψ_t + iψ) que empuja la fase a girar con ω = 1
 //   (las compactadas como un baño que gira: como el arrastre de Ekman en un depósito giratorio)  [H]
 //   Uso: GAMMA=0.1 ./arrastre uc delta tmax
-// Basado en evolucion.cpp — Estabilidad del solitón con umbral inferior (Bingham), evolución temporal radial († Claude, 18-10-2026)
+// Basado en evolucion.cpp — Estabilidad del solitón con umbral inferior (Bingham), evolución temporal radial (Claude, 18-10-2026)
 //
 // Ecuación de onda cuya forma estacionaria ψ = u(r)·e^{−it} es la de umbral.cpp:
 //     ∂²ψ/∂t² − ∇²ψ + M²ψ = 0 ,   M = 1 − a·(|ψ| − uc)₊ ,   a = 1/2      (unidades: ħ = c = m = 1)

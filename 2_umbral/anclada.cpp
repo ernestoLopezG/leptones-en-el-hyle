@@ -1,6 +1,6 @@
 // anclada.cpp — FRECUENCIA ANCLADA por las compactadas (ψ = u·e^{−it}, u real; dinámica = parte real:
 //    u_tt = ∇²u − (M² − 1)u ;  la parte imaginaria (−2u_t) la absorben las compactadas)  [H]
-// Basado en evolucion.cpp — Estabilidad del solitón con umbral inferior (Bingham), evolución temporal radial († Claude, 18-10-2026)
+// Basado en evolucion.cpp — Estabilidad del solitón con umbral inferior (Bingham), evolución temporal radial (Claude, 18-10-2026)
 //
 // Ecuación de onda cuya forma estacionaria ψ = u(r)·e^{−it} es la de umbral.cpp:
 //     ∂²ψ/∂t² − ∇²ψ + M²ψ = 0 ,   M = 1 − a·(|ψ| − uc)₊ ,   a = 1/2      (unidades: ħ = c = m = 1)

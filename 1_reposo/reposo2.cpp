@@ -1,5 +1,5 @@
 // reposo2.cpp — Leptón en reposo en las dimensiones extendidas (simetría esférica, l = 0).
-// Programa de referencia con el estado vigente (18-10-2026). († Claude, a partir de reposo.cpp del 11-10)
+// Programa de referencia con el estado vigente (18-10-2026). (Claude, a partir de reposo.cpp del 11-10)
 //
 // QUÉ DESCRIBE
 //   La envolvente en las extendidas, igual para electrón, muón y tau: misma ecuación, cada uno en sus

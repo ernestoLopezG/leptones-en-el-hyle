@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # precesion_hopfion.py — hopfión entero (superficie n_z = 0 de la solución numérica) con su eje inclinado
-# y precesionando alrededor de un campo externo  († Claude, 25-10-2026)
+# y precesionando alrededor de un campo externo  (Claude, 25-10-2026)
 # Uso: python3 precesion_hopfion.py n_final_N150.bin [angulo_cono_grados=30]
 # Necesita numpy, matplotlib y scikit-image (Debian: sudo apt install python3-skimage)
 import sys, numpy as np, matplotlib; matplotlib.use('Agg')

@@ -1,4 +1,4 @@
-// cuartico.cpp — Solitón de umbral con TÉRMINO DE CUARTO ORDEN (módulo K, abanico / Bopp–Podolsky)  († Claude, 19-10-2026)
+// cuartico.cpp — Solitón de umbral con TÉRMINO DE CUARTO ORDEN (módulo K, abanico / Bopp–Podolsky)  (Claude, 19-10-2026)
 //
 // Frecuencia anclada por las compactadas (ψ = u·e^{−it}, u real). Dinámica [H]:
 //     u_tt + γ·u_t = ∇²u − K·∇⁴u − U'(u) ,   U'(u) = (M² − 1)u ,  M = 1 − ½(u − uc)₊

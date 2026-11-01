@@ -1,4 +1,4 @@
-// hopfion_eta.cpp — Paso 2b: hopfión con la DIRECCIÓN COMPACTA η  († Claude, 20-10-2026)
+// hopfion_eta.cpp — Paso 2b: hopfión con la DIRECCIÓN COMPACTA η  (Claude, 20-10-2026)
 //   Hipótesis [H]: al avanzar a lo largo de η, el director gira sobre sí mismo alrededor de la dirección de reposo ẑ,
 //   p vueltas por vuelta de η:   n(x, η) = R_ẑ(k·η) · n₃(x) ,   k = p/R_ξ   (giro fijo impreso por la circulación compacta).
 //   Reducción exacta a 3D [D]:  ∂_η n = k (ẑ × n),  |∂_η n|² = k²(1 − n_z²),  F_iη = n·(∂_i n × ∂_η n) = −k ∂_i n_z

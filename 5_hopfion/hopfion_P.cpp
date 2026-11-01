@@ -1,4 +1,4 @@
-// hopfion_P.cpp — hopfión que GIRA en el tiempo con momento angular fijo  († Claude, 28-10-2026)
+// hopfion_P.cpp — hopfión que GIRA en el tiempo con momento angular fijo  (Claude, 28-10-2026)
 //
 // Pregunta: ¿puede el giro del director (y no el término de cuarto orden κ₄) impedir que el nudo se encoja?
 // Precedente: Volovik y Mineev, Sov. Phys. JETP 46, 401 (1977): en ³He-A el solitón se estabiliza por su momento.

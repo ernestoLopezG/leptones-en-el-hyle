@@ -1,4 +1,4 @@
-// derrick.cpp — ¿Es inestable la solución de reposo2 SIN umbral inferior? (frecuencia anclada, u real)  († Claude, 18-10)
+// derrick.cpp — ¿Es inestable la solución de reposo2 SIN umbral inferior? (frecuencia anclada, u real)  (Claude, 18-10)
 //   Estática (reposo2, eps = 0, gw = 0): u'' + (2/x)u' = [(1 − u/2)² − 1]u, empalmada con c/x en x_b (u + x·u' = 0)
 //   Dinámica: u_tt = ∇²u − [(1 − u/2)² − 1]u   (la misma de anclada.cpp con uc = 0)
 //   Uso: ./derrick u0 delta tmax    -> imprime u(0)/u0 cada 5 unidades de tiempo

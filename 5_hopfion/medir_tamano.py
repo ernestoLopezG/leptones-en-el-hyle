@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# medir_tamano.py — tamaño del hopfión y forma de la cola, a partir de los .bin  († Claude, 21-10-2026)
+# medir_tamano.py — tamaño del hopfión y forma de la cola, a partir de los .bin  (Claude, 21-10-2026)
 # Uso:  python3 medir_tamano.py fich1.bin fich2.bin ...      (sin argumentos: todos los n_*.bin de la carpeta)
 # Lee el formato de hopfion.cpp / hopfion_eta.cpp (int N, double L, N³ vectores n).
 # Mide, en el plano ecuatorial z = 0 (promediando en el ángulo):
