@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# cola_angular.py — forma angular de la cola del hopfión  († Claude, 25-10-2026)
+# cola_angular.py — forma angular de la cola del hopfión  (Claude, 25-10-2026)
 #
 # Uso:  python3 cola_angular.py n_eta_N150_K1.bin  [otros .bin ...]
 #

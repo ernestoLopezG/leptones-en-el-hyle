@@ -1,6 +1,6 @@
 # Leptones en el hyle — programas
 
-Código que acompaña al preprint «Leptones en el hyle» (Ernesto López). Los programas los escribió Claude (Anthropic) en colaboración con el autor; en las cabeceras van marcados con †. Las cabeceras de cada programa explican la ecuación que resuelve, el método y el formato de salida.
+Código que acompaña al preprint «Leptones en el hyle» (Ernesto López). Todo el código lo ha escrito Claude (Anthropic) y lo ha revisado y ejecutado el autor. Las cabeceras de cada programa explican la ecuación que resuelve, el método y el formato de salida.
 
 DOI: [10.5281/zenodo.23545995](https://doi.org/10.5281/zenodo.23545995) · Licencia: MIT (fichero `LICENSE`).
 

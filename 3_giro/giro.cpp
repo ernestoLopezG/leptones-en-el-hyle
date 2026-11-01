@@ -1,4 +1,4 @@
-// giro.cpp — Envolvente que GIRA alrededor del eje z (simetría de eje, coordenadas ρ, z)  († Claude, 18-10-2026)
+// giro.cpp — Envolvente que GIRA alrededor del eje z (simetría de eje, coordenadas ρ, z)  (Claude, 18-10-2026)
 //
 //   ψ(ρ,z,φ,t) = w(ρ,z,t)·e^{i m φ}     (m = número de vueltas del giro; m = 0 sin giro)
 //   Ecuación [H] (la de evolucion.cpp, frecuencia libre, con umbral inferior uc):

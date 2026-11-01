@@ -1,4 +1,4 @@
-// cargafija.cpp — Envolvente con frecuencia anclada y CARGA FIJADA (prueba de la idea †, 18-10-2026)
+// cargafija.cpp — Envolvente con frecuencia anclada y CARGA FIJADA (prueba de la idea; Claude, 18-10-2026)
 //   u_tt = ∇²u − (M² − 1)u − σ(r)·u_t ,  M = 1 − ½(u − uc)₊      (u real: ψ = u·e^{−it}, ω anclada a 1)
 //   σ(r): capa que amortigua u_t junto al borde (deja pasar la radiación sin tocar las soluciones estáticas)
 //   Borde r = Rb, tres modos:

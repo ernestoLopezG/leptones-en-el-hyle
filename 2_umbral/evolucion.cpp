@@ -1,4 +1,4 @@
-// evolucion.cpp — Estabilidad del solitón con umbral inferior (Bingham), evolución temporal radial († Claude, 18-10-2026)
+// evolucion.cpp — Estabilidad del solitón con umbral inferior (Bingham), evolución temporal radial (Claude, 18-10-2026)
 //
 // Ecuación de onda cuya forma estacionaria ψ = u(r)·e^{−it} es la de umbral.cpp:
 //     ∂²ψ/∂t² − ∇²ψ + M²ψ = 0 ,   M = 1 − a·(|ψ| − uc)₊ ,   a = 1/2      (unidades: ħ = c = m = 1)

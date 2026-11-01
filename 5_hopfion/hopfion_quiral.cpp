@@ -1,10 +1,10 @@
-// hopfion_quiral.cpp — Paso 2c: hopfión SIN término de cuarto orden, con QUIRALIDAD del hyle  († Claude, 20-10-2026)
+// hopfion_quiral.cpp — Paso 2c: hopfión SIN término de cuarto orden, con QUIRALIDAD del hyle  (Claude, 20-10-2026)
 //   E = ∫ [ ∂n·∂n  +  C4·½F²  +  2q·n·(∇×n)  +  k²(1 − n_z²)  +  k²|∇n_z|² ]
 //        Frank      (cuarto orden,  quiralidad   masa KK del giro en η  (rigidez extra del giro)
 //                    C4=0 lo quita)  (q y −q: los dos sentidos)
 //   Derrick: Frank ∝ λ, quiral ∝ λ² (puede ser negativo), masa ∝ λ³  ->  puede haber mínimo sin C4.
 //   Uniforme estable frente a la hélice si k² > q² (aprox.).  Uso: C4=0 Q0=0.8 K=1 ./hopfion_quiral N L a iter
-// Basado en hopfion_eta.cpp — Paso 2b: hopfión con la DIRECCIÓN COMPACTA η  († Claude, 20-10-2026)
+// Basado en hopfion_eta.cpp — Paso 2b: hopfión con la DIRECCIÓN COMPACTA η  (Claude, 20-10-2026)
 //   Hipótesis [H]: al avanzar a lo largo de η, el director gira sobre sí mismo alrededor de la dirección de reposo ẑ,
 //   p vueltas por vuelta de η:   n(x, η) = R_ẑ(k·η) · n₃(x) ,   k = p/R_ξ   (giro fijo impreso por la circulación compacta).
 //   Reducción exacta a 3D [D]:  ∂_η n = k (ẑ × n),  |∂_η n|² = k²(1 − n_z²),  F_iη = n·(∂_i n × ∂_η n) = −k ∂_i n_z

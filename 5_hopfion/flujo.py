@@ -1,4 +1,4 @@
-# flujo.py — Paso 2a: el flujo que genera el hopfión según la relación de Mermin–Ho  († Claude, 19-10-2026)
+# flujo.py — Paso 2a: el flujo que genera el hopfión según la relación de Mermin–Ho  (Claude, 19-10-2026)
 #   Hipótesis [H]: la vorticidad del flujo del hyle es proporcional al retorcimiento del director,
 #       ω_i = ∇×v = ½ ε_ijk n·(∂_j n × ∂_k n) = B_i      (constante de proporcionalidad = 1 en estas unidades)
 #   Entonces v = A (potencial vector en gauge de Coulomb, ∇·v = 0: flujo incompresible) y la

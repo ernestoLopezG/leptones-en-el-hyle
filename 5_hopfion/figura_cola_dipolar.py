@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# figura_cola_dipolar.py — intuición visual de la cola de Yukawa dipolar  († Claude, 25-10-2026)
+# figura_cola_dipolar.py — intuición visual de la cola de Yukawa dipolar  (Claude, 25-10-2026)
 # Campo analítico (no la simulación): fuera del núcleo, n_⊥ = n_x + i n_y = A·(x+iy)/r · k₁(kr),
 # con k₁(z) ∝ e^(−z)(1+1/z)/z²  →  |n_⊥|² ∝ sen²θ · e^(−2kr)(1+1/kr)²/r².
 # Unidades: r en 1/k (la longitud de Compton si k = 1/ƛ_C). El nudo se dibuja muy pequeño (ancla).

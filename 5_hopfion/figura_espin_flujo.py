@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# figura_espin_flujo.py — líneas de flujo del hopfión para espín +½, −½ y la imagen especular  († Claude, 26-10-2026)
+# figura_espin_flujo.py — líneas de flujo del hopfión para espín +½, −½ y la imagen especular  (Claude, 26-10-2026)
 #
 # Campo analítico: mapa de Hopf de carga 1 (n → ẑ en el infinito, n = −ẑ en el anillo r = 1, z = 0).
 #   W = z1/z2,  z1 = 2(x+iy)/(1+r²),  z2 = (2z + i(r²−1))/(1+r²),   n = (2 Re W, 2 Im W, 1−|W|²)/(1+|W|²)

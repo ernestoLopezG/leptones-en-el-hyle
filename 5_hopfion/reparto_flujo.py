@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# reparto_flujo.py — reparto de la energía del flujo de Mermin–Ho entre poloidal y toroidal  († Claude, 27-10-2026)
+# reparto_flujo.py — reparto de la energía del flujo de Mermin–Ho entre poloidal y toroidal  (Claude, 27-10-2026)
 #
 # Pregunta: ¿el reparto 66 % / 34 % del hopfión numérico es 2/3 y 1/3?
 # Mide la fracción toroidal Et/E (la que gira alrededor del eje) en:

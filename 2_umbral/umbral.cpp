@@ -1,4 +1,4 @@
-// umbral.cpp — Leptón en reposo con umbral inferior tipo Bingham (opción (a) de Ernesto, 18-10-2026)  († Claude)
+// umbral.cpp — Leptón en reposo con umbral inferior tipo Bingham (Claude, 18-10-2026)
 //
 //   El hyle no responde mientras u < uc (umbral de fluencia). Por encima responde como antes:
 //       u'' + (2/x) u' = [ q² − 1 ] u ,   q = 1 − a·(u − uc)₊ ,   a = 1/2 ,  eps = 0, sin autocampo (gw = 0)

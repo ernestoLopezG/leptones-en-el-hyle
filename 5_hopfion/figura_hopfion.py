@@ -1,4 +1,4 @@
-# figura_hopfion.py — figura del hopfión con la SOLUCIÓN NUMÉRICA (no esquema)  († Claude, 21-10-2026)
+# figura_hopfion.py — figura del hopfión con la SOLUCIÓN NUMÉRICA (no esquema)  (Claude, 21-10-2026)
 #   (a) superficies de igual n_z (toros anidados) en 3D, cortadas un cuarto, con líneas del flujo de Mermin–Ho
 #       integradas desde puntos sobre esas superficies;
 #   (b) corte por el plano y = 0: n_z en color, contornos de n_z y vectores del flujo en el plano.
