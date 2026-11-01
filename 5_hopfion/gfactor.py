@@ -1,6 +1,6 @@
 # gfactor.py — factor g del hopfión con circulación compacta que avanza en el tiempo  (Claude, 20-10-2026)
 #   Planteamiento [H]: n(x, η, t) = R_ẑ(kη − ωt)·n₃(x)  (la circulación compacta avanza a lo largo de η con el tiempo)
-#   Pulsaciones sin masa en el hyle (Ernesto): avanzan a c a lo largo de η  ->  ω = k (c = 1).
+#   Pulsaciones sin masa en el hyle (postulado 2): avanzan a c a lo largo de η  ->  ω = k (c = 1).
 #   Cuentas [D] con la energía de Faddeev–Skyrme en 4+1 (Lagrangiano ∂n·∂n − ½F·F):
 #     ∂_t n = −ω ẑ×n , ∂_η n = k ẑ×n , F_ti = ω ∂_i n_z , F_iη = −k ∂_i n_z , F_tη = 0
 #     I1 = ∫(1 − n_z²) ,  I2 = ∫|∇n_z|² ,  I = I1 + I2 ,  E_FS = ∫[∂n·∂n + ½F_ijF_ij]
