@@ -637,7 +637,7 @@ Este trabajo prioriza la explicación sobre el cálculo, como han hecho muchos p
 \section*{Apéndice A. Reproducibilidad}
 \addcontentsline{toc}{section}{Apéndice A. Reproducibilidad}
 
-Todo el código lo ha escrito Claude y lo ha revisado y ejecutado el autor; está disponible en GitHub (\href{https://github.com/ernestoLopezG/leptones-en-el-hyle}{\texttt{ernestoLopezG/leptones-en-el-hyle}}) y en Zenodo, \href{https://doi.org/10.5281/zenodo.23545994}{doi:10.5281/zenodo.23545994}, con licencia MIT y un \texttt{LEEME} que da las órdenes exactas y los valores esperados. Los programas en C++ son un único fichero cada uno, con OpenMP; los análisis están en Python (numpy, scipy, matplotlib, scikit-image). Unidades: $\hbar=c=m=1$ en las carpetas 1 a~4; en la~5, longitudes en $\ell=\sqrt{\kappa_4/\kappa_2}$, $k$ en $1/\ell$ y energías en $\sqrt{\kappa_2\kappa_4}$; en la~6, la ecuación de Mathieu es adimensional.
+Todo el código lo ha escrito Claude y lo ha revisado y ejecutado el autor; está disponible en GitHub (\href{https://github.com/ernestoLopezG/leptones-en-el-hyle}{\texttt{ernestoLopezG/leptones-en-el-hyle}}) y en Zenodo, \href{https://doi.org/10.5281/zenodo.23545994}{doi:10.5281/zenodo.23545994}, con licencia MIT y un \texttt{LEEME} que da las órdenes exactas y los valores esperados. Los programas en C++ son un único fichero cada uno, con OpenMP; los análisis están en Python (numpy, scipy, matplotlib, scikit-image). Unidades: $\hbar=c=m=1$ en las carpetas 1 a~4; en las carpetas 5, 7 y~8, longitudes en $\ell=\sqrt{\kappa_4/\kappa_2}$, $k$ en $1/\ell$ y energías en $\sqrt{\kappa_2\kappa_4}$; en la~6, la ecuación de Mathieu es adimensional. Los programas del hopfión con giro en $\eta$ de la versión~1.0 (\prog{hopfion\_eta.cpp}, \prog{cola\_angular.py}, \prog{figura\_cola\_dipolar.py}), cuyo material se ha retirado del texto, siguen en el repositorio.
 
 \begin{center}
 \small
@@ -667,6 +667,8 @@ Programa & Qué calcula & Método & Sección \\
 \addlinespace
 \prog{hopfion\_compacto.cpp} & Hopfión con una dirección periódica que se encoge & Flujo de gradiente con continuación en el periodo & \ref{sec:descartado} \\
 \addlinespace
+\prog{convergencia.sh} & Tabla de convergencia (cuatro mallas y cajas) y prueba de punto de silla & Ejecuta \prog{hopfion.cpp}, \prog{hopfq.py}, \prog{medir\_tamano.py} y \prog{perturba.py} & \ref{sec:extendidas} \\
+\addlinespace
 \prog{perturba.py} & Deformación asimétrica de un nudo relajado (prueba de punto de silla) & Estiramiento, compresión y ruido; se vuelve a relajar con \prog{hopfion.cpp} & \ref{sec:extendidas} \\
 \addlinespace
 \prog{nucleacion.cpp} & Formación del nudo desde el vacío: fusión local, enfriamiento y flujo helicoidal & Director con grado de orden $S^2=\max(0,1-T)$, ruido térmico y término $-\lambda\!\int S^3\vb{\Omega}\cdot\vb{B}$ & \ref{sec:extendidas} \\
@@ -684,7 +686,7 @@ Programa & Qué calcula & Método & Sección \\
 \end{tabularx}
 \end{center}
 
-\apartado{Resultados de control} (malla $150^3$, caja~12): $E=544,35$, $E/(32\sqrt2\,\pi^2)=1,219$ (literatura $\approx1,21$), $Q=-0,979$, $E_2/E_4=0,965$.
+\apartado{Resultados de control} (malla $150^3$, caja~12): $E=544,35$, $E/(32\sqrt2\,\pi^2)=1,219$, $Q=-0,979$, $E_2/E_4=0,965$. Con la tabla de convergencia de la sección~\ref{sec:extendidas} (\prog{convergencia.sh}), $E/(32\sqrt2\,\pi^2)=1,23\pm0,02$, frente a $\approx1,22$ en la literatura. Prueba de punto de silla: tras una deformación asimétrica que sube la energía un 46~\%, el nudo vuelve a $E/(32\sqrt2\,\pi^2)=1,27995$ con simetría axial.
 
 \apartado{Comprobaciones que el lector puede repetir.} (1)~Virial: $E_2/E_4\to1$ en caja grande. (2)~Cota de energía: con $Q=1$, la energía no puede bajar del mínimo; si baja, el nudo se ha deshecho en la malla. (3)~Convergencia en malla: la solución de $100^3$ y la de $150^3$ dan la misma geometría.
 
@@ -694,7 +696,7 @@ Programa & Qué calcula & Método & Sección \\
 \section*{Nota metodológica}
 \addcontentsline{toc}{section}{Nota metodológica}
 
-El modelo es fruto de unos veinte años de trabajo del autor. Este trabajo se desarrolló entre junio y octubre de 2026 en colaboración con Claude (Anthropic). El autor aporta la intuición física y la dirección, y tiene la responsabilidad intelectual final; Claude se encargó de la formalización, los programas, la búsqueda bibliográfica y la revisión crítica. Muchos razonamientos se desarrollaron en conversaciones totalmente equivalentes a las que surgirían en cualquier colaboración entre colegas.
+El modelo es fruto de unos veinte años de trabajo del autor. Este trabajo se desarrolló entre junio y noviembre de 2026 en colaboración con Claude (Anthropic). El autor aporta la intuición física y la dirección, y tiene la responsabilidad intelectual final; Claude se encargó de la formalización, los programas, la búsqueda bibliográfica y la revisión crítica. Muchos razonamientos se desarrollaron en conversaciones totalmente equivalentes a las que surgirían en cualquier colaboración entre colegas.
 
 Las ciencias naturales son descriptivas, y a menudo tienen que deducir las propiedades de un medio sobre el que no se puede experimentar directamente. Nadie ha estado en el núcleo de la Tierra: su estructura se deduce de cómo viajan las ondas sísmicas, buscando el modelo de interior cuyas soluciones son compatibles con los registros; el interior del Sol se estudia igual, a partir de sus oscilaciones. Este trabajo hace lo mismo con un medio que tampoco se puede observar directamente. Sus afirmaciones tienen la forma de un condicional: «el hyle, sobre el que no podemos experimentar directamente, da soluciones compatibles con lo que observamos si tiene tal propiedad»; por ejemplo, un término de cuarto orden. El punto de partida también es observacional: los electrones existen, tienen naturaleza ondulatoria y se describen como puntuales, sin ninguna estructura en las dimensiones extendidas, lo que es una paradoja física que pide una explicación; buscar las propiedades del medio que permiten esas soluciones es legítimo en un trabajo que no pretende haber resuelto el misterio del espín.
 
@@ -709,6 +711,37 @@ Se ha puesto a cada resultado una etiqueta que permita al lector conocer su esta
 \end{itemize}
 
 Hemos considerado de utilidad registrar los errores encontrados durante el trabajo y las vías que no funcionaron (sección~\ref{sec:descartado}), con su razón.
+
+\apartado{Declaración de uso de inteligencia artificial.} En este trabajo se ha usado Claude, un modelo de lenguaje de Anthropic, en varias de sus versiones, entre junio y noviembre de 2026. Su papel ha sido el siguiente:
+\begin{itemize}[leftmargin=*]
+\item \textbf{Código.} Todos los programas del apéndice~A los ha escrito Claude; el autor los ha revisado y ejecutado, y los resultados numéricos que se citan son reproducibles con ellos.
+\item \textbf{Formalización y redacción.} A partir de las ideas físicas del autor, Claude ha propuesto su formulación matemática y ha redactado buena parte del texto, que el autor ha revisado, corregido y aprobado. La idea de cada mecanismo es del autor salvo donde se indica.
+\item \textbf{Búsqueda bibliográfica y revisión crítica.} Claude ha buscado precedentes y referencias, y ha señalado errores y tensiones con datos experimentales. Los cambios de la versión~1.1 responden, en buena parte, a un informe de árbitro redactado por otra instancia de Claude que no conocía el trabajo previo, pedido expresamente para someter el texto a una crítica independiente.
+\end{itemize}
+Las referencias deben comprobarse en sus fuentes originales; se han revisado, pero un modelo de lenguaje puede introducir errores en ellas. La responsabilidad del contenido, de sus afirmaciones y de sus errores es solo del autor.
+
+% =====================================================================
+\section*{Glosario}
+\addcontentsline{toc}{section}{Glosario}
+
+Términos propios del trabajo, con el equivalente estándar más cercano cuando existe. Los equivalentes son orientativos: en el modelo los conceptos no son idénticos a los de la teoría establecida.
+
+\begin{description}[leftmargin=1.5em,style=nextline,itemsep=0.2em]
+\item[Hyle] El medio continuo del modelo, con propiedades de cristal líquido esméctico en $5+1$ dimensiones. Su nombre es el del concepto aristotélico de materia. No es un éter: las partículas no se mueven a través de él, son vibraciones suyas.
+\item[Dimensiones compactas $(\xi,\eta)$] Las dos dimensiones de tamaño finito, de radio $R_u\approx5~\mu$m: $\xi$ es la radial (a través de las capas) y $\eta$ la angular (a lo largo de ellas). Equivalente: las dimensiones extra de Kaluza--Klein.
+\item[Esméctico A, esméctico \Cst, núcleo fluido] Las tres fases del hyle a lo largo de $\xi$, de dentro a fuera: un núcleo isótropo, una fase con el director perpendicular a las capas (A) y una con el director inclinado y una precesión quiral (\Cst). Los nombres son los de las fases de los cristales líquidos más parecidas.
+\item[Interfaz A/\Cst] La frontera entre las dos fases esmécticas, en $\xi_0\approx1,9\times10^{-13}$~m. En ella vive el electrón, y su posición fija la masa y la carga.
+\item[Pulsación] Una onda autosostenida del hyle que avanza a $c$: la partícula. Equivalente: la función de onda de una partícula, aquí como onda física de un medio.
+\item[Circulación en $\eta$] El avance de la pulsación a lo largo de la dimensión compacta angular. Su sentido, en la interfaz, es el signo de la carga.
+\item[Arrastre] El movimiento del hyle a lo largo de $\eta$ que produce, alrededor de una carga, una circulación secundaria no autosostenida. Es el campo eléctrico. Equivalente: el potencial electromagnético de Kaluza--Klein.
+\item[Nucleación] Una zona en la que la pulsación funde localmente el orden del hyle, al superar un umbral. Dos por ciclo generan el potencial periódico de la ecuación de Mathieu.
+\item[Director] La orientación local de las moléculas de un cristal líquido; aquí, la orientación del orden del hyle en las extendidas.
+\item[Nudo, hopfión] Una textura del director con número de Hopf~1, de energía casi nula, que marca el centro y el eje de la partícula. Equivalente: el solitón de Faddeev--Skyrme.
+\item[Temblor de Dirac] El movimiento de amplitud $\hbar/2mc$ que la ecuación de Dirac atribuye al electrón (\emph{zitterbewegung}); su huella es el término de Darwin.
+\item[Neutrínica] La interacción que en el modelo sienten los neutrinos. Equivalente más cercano: la interacción débil.
+\item[Trineutrino] El neutrino del modelo: una sola pulsación con tres modos posibles en \Cst. Equivalente: los tres estados de masa de los neutrinos.
+\item[Epícima] El constituyente de los hadrones en el modelo, ligera o pesada. Se desarrollará en un trabajo sobre hadrones.
+\end{description}
 
 % =====================================================================
 \section*{Referencias}
