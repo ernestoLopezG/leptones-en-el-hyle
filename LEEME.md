@@ -7,7 +7,7 @@ DOI: [10.5281/zenodo.23545994](https://doi.org/10.5281/zenodo.23545994) (todas l
 ## Requisitos (Debian / Ubuntu)
 
 ```
-sudo apt install g++ python3-numpy python3-scipy python3-matplotlib python3-skimage
+sudo apt install g++ python3-numpy python3-scipy python3-matplotlib python3-skimage libfftw3-dev
 ```
 
 Compilar cualquiera de los programas en C++ (todos son un único fichero y usan OpenMP):
@@ -23,17 +23,20 @@ Para elegir los núcleos: `OMP_NUM_THREADS=4 ./programa ...`
 Todo es adimensional.
 
 - **Carpetas 1 a 4:** ħ = c = m = 1.
-- **Carpeta 5:** las longitudes están en unidades de ℓ = √(κ₄/κ₂), k en unidades de 1/ℓ y las energías en unidades de √(κ₂κ₄). κ₂ es la rigidez del director y κ₄ la del término de cuarto orden. El valor de ℓ en metros no está fijado; es el punto 5 de «Lo abierto» del preprint.
+- **Carpetas 5, 7 y 8:** las longitudes están en unidades de ℓ = √(κ₄/κ₂), k en unidades de 1/ℓ y las energías en unidades de √(κ₂κ₄). κ₂ es la rigidez del director y κ₄ la del término de cuarto orden. El valor de ℓ en metros no está fijado; es el punto 5 de «Lo abierto» del preprint (sección 6).
+- **Carpeta 6:** la ecuación de Mathieu es adimensional.
 
 ## Qué hay en cada carpeta y a qué parte del preprint corresponde
 
 | Carpeta | Programas | Preprint |
 |---|---|---|
-| `1_reposo` | `reposo2.cpp`: leptón en reposo con simetría esférica (programa de referencia de la fase escalar) | Sección 4, contexto |
-| `2_umbral` | `umbral.cpp` (estática con umbral inferior tipo Bingham), `evolucion.cpp` (frecuencia libre), `anclada.cpp` (frecuencia anclada), `derrick.cpp` (sin umbral), `cargafija.cpp` y `arrastre.cpp` (pruebas auxiliares) | Sección 4, filas 1 y 2 |
-| `3_giro` | `giro.cpp`, `giro_anc.cpp`: envolvente que gira en un plano de las extendidas | Sección 4, fila 4 |
-| `4_cuartico` | `cuartico.cpp`: solitón de umbral con término de cuarto orden, sin topología | Sección 4, fila 3 |
-| `5_hopfion` | `hopfion.cpp`, `hopfion_eta.cpp`, `hopfion_quiral.cpp`, `hopfion_P.cpp` y los análisis en Python | Sección 3; sección 4, filas 5 y 6; errores corregidos |
+| `1_reposo` | `reposo2.cpp`: leptón en reposo con simetría esférica (programa de referencia de la fase escalar) | Sección 5, contexto |
+| `2_umbral` | `umbral.cpp` (estática con umbral inferior tipo Bingham), `evolucion.cpp` (frecuencia libre), `anclada.cpp` (frecuencia anclada), `derrick.cpp` (sin umbral), `cargafija.cpp` y `arrastre.cpp` (pruebas auxiliares) | Sección 5, filas 1 y 2 |
+| `3_giro` | `giro.cpp`, `giro_anc.cpp`: envolvente que gira en un plano de las extendidas | Sección 5, fila 4 |
+| `4_cuartico` | `cuartico.cpp`: solitón de umbral con término de cuarto orden, sin topología | Sección 5, fila 3 |
+| `5_hopfion` | `hopfion.cpp`, `hopfion_quiral.cpp`, `hopfion_P.cpp`, los análisis en Python, `perturba.py` (punto de silla) y `convergencia.sh` | Sección 4; sección 5, filas 5 y 6; errores corregidos |
+| `7_nucleacion` | `nucleacion.cpp` (formación del nudo por fusión y flujo helicoidal), `nucleacion_persistente.cpp` y `nucleacion_pulsos.cpp` (el nudo frente a la fusión), `torsion_flujo.py` y los barridos | Sección 4, «Formación del nudo» y «El nudo frente a la fusión»; sección 5 |
+| `8_tamano` | `hopfion_compacto.cpp` (dirección periódica que se encoge) y `hopfion_capas.cpp` (lámina de esméctico con capas; necesita FFTW) | Sección 5, vías descartadas sobre el tamaño del nudo |
 | `6_mathieu` | `mathieu_q.py`: funciones angulares de Mathieu con q negativo (método de Hill) | Sección 2, figura de los pozos |
 | `preprint` | `leptones_en_el_hyle.tex` (fuente LaTeX), `leptones_en_el_hyle.pdf` y las figuras en `figuras/` | El texto completo |
 
@@ -48,7 +51,45 @@ xelatex leptones_en_el_hyle.tex
 xelatex leptones_en_el_hyle.tex
 ```
 
-## Reproducir los resultados de la sección 3
+## Versión 1.1 (noviembre de 2026)
+
+La versión 1.1 retira del preprint el material del hopfión con giro k ≠ 0 en η (masa de Kaluza–Klein, cola de Yukawa, forma de la cola): suponía un giro estático, incompatible con el postulado 2. Los programas `hopfion_eta.cpp`, `cola_angular.py` y `figura_cola_dipolar.py` y las órdenes con k ≠ 0 de esta guía se mantienen como parte de la versión 1.0. Añade la tabla de convergencia, la prueba de punto de silla, la formación del nudo por nucleación (carpeta 7) y las vías descartadas sobre su tamaño (carpeta 8). En el preprint 1.1 la numeración de secciones cambia: 3 es la nueva sección de la fuerza eléctrica, 4 la estructura en las extendidas, 5 lo descartado, 6 lo abierto y 7 las conclusiones.
+
+## Convergencia y punto de silla (sección 4)
+
+En la carpeta `5_hopfion`:
+
+```
+bash convergencia.sh
+```
+
+| Malla | Caja | h | E/(32√2π²) | E2/E4 | Q |
+|---|---|---|---|---|---|
+| 61³ | 5,4 | 0,090 | 1,280 | 0,66 | −0,961 |
+| 81³ | 7,2 | 0,090 | 1,241 | 0,78 | −0,968 |
+| 101³ | 9,0 | 0,090 | 1,224 | 0,86 | −0,971 |
+| 121³ | 9,0 | 0,075 | 1,232 | 0,87 | −0,980 |
+
+Resultado: E/(32√2π²) = 1,23 ± 0,02 (literatura ≈ 1,22). Punto de silla: el nudo deformado (+46 % de energía) vuelve a E/(32√2π²) = 1,27995 con simetría axial.
+
+## Formación del nudo y fusión (sección 4; carpeta `7_nucleacion`)
+
+```
+bash barrido.sh rapido          # formación desde el vacío (barrido.sh … barrido5.sh: barridos de parámetros)
+bash barrido_persistente.sh     # núcleo fundido permanente, forzado ½ frente a 3/2 (unas 2,5 h con 4 núcleos)
+bash barrido_pulsos.sh          # fusión pulsada (unos 30 min)
+```
+
+Resultados esperados: el signo de la helicidad del flujo elige el signo de Q y la carga crece con la torsión; una fusión permanente sobre el nudo lo desata (incluso con κ₄ y sin ruido); con pulsos breves sobrevive; en medio ordenado el nudo Q = 1 no cambia de carga bajo forzado alineado. Las cabeceras de cada programa explican los parámetros.
+
+## Tamaño del nudo (sección 5; carpeta `8_tamano`)
+
+```
+bash barrido_compacto.sh        # al encoger la dirección periódica el nudo se aplasta pero no se reduce en las extendidas
+bash barrido_capas.sh           # el radio no sigue a √(λΔ): R/R_control ≈ 0,90
+```
+
+## Reproducir los resultados de la sección 4 (versión 1.0: sección 3)
 
 Todo se hace en la carpeta `5_hopfion`. Los tiempos son orientativos para un i5 de 4 núcleos.
 
@@ -59,9 +100,9 @@ OMP_NUM_THREADS=4 ./hopfion 150 12 1.0 30000
 python3 hopfq.py n_final_N150.bin
 ```
 
-Resultado esperado: E = 544,35, E/(32√2π²) = 1,219 (literatura: ≈ 1,21), Q = −0,979, E2/E4 = 0,965.
+Resultado esperado: E = 544,35, E/(32√2π²) = 1,219 (literatura: ≈ 1,22), Q = −0,979, E2/E4 = 0,965.
 
-**Giro en η**:
+**Giro en η** (versión 1.0; retirado del preprint 1.1):
 
 ```
 K=0.5 OMP_NUM_THREADS=4 ./hopfion_eta 150 12 1.0 30000
@@ -88,7 +129,7 @@ python3 figura_hopfion.py n_final_N150.bin
 python3 figura_hopfion.py n_eta_N150_K1.bin
 ```
 
-**Tamaño y cola** (radio del anillo y ajuste de Yukawa k_ef):
+**Tamaño y cola** (radio del anillo y ajuste de Yukawa k_ef; la cola es material de la versión 1.0):
 
 ```
 python3 medir_tamano.py n_final_N150.bin n_eta_N150_K0.5.bin n_eta_N150_K1.bin
@@ -102,7 +143,7 @@ python3 medir_tamano.py n_final_N150.bin n_eta_N150_K0.5.bin n_eta_N150_K1.bin
 
 Para k = 0 y k = 0,5 el valor de k_ef lo contamina la caja (ver «Controles»).
 
-**Forma angular de la cola** (perfil dipolar sin²θ alrededor del eje del nudo):
+**Forma angular de la cola** (versión 1.0; perfil dipolar sin²θ alrededor del eje del nudo):
 
 ```
 python3 cola_angular.py n_final_N150.bin n_eta_N150_K0.1.bin
@@ -126,7 +167,7 @@ python3 figura_cola_dipolar.py    # cola de Yukawa dipolar alrededor de un nudo 
 python3 figura_espin_flujo.py     # líneas de flujo para espín +½, −½ e imagen especular, con su enlace
 ```
 
-**Precesión del eje bajo un campo externo** (figura de la sección 5, punto 3):
+**Precesión del eje bajo un campo externo** (figura de la sección 6, punto 3):
 
 ```
 python3 precesion_hopfion.py n_final_N150.bin 30    # el último número es el ángulo del cono en grados
@@ -146,7 +187,7 @@ En la carpeta `6_mathieu`:
 python3 mathieu_q.py    # → mathieu_q_negativo.png, con q = −10, −100 y −1000
 ```
 
-## Reproducir la sección 4 (vías descartadas)
+## Reproducir la sección 5 (vías descartadas)
 
 Los argumentos de estas órdenes son ejemplos; las cabeceras explican cada parámetro.
 
@@ -179,7 +220,7 @@ Los tres programas de hopfión guardan el `.bin` cada 2000 iteraciones. Para con
 - **Cota de energía:** los términos del giro son positivos. Por eso, mientras Q = 1, la energía con giro nunca puede bajar de la de k = 0 (544). Si baja, el nudo se ha deshecho en la malla.
 - **Malla:** con h = L/(N − 1) mayor que unos 0,09 el nudo se deshace, incluso con k = 0.
 - **Paso de tiempo:** el flujo de gradiente es explícito. Con nudos pequeños (k grande), el término de cuarto orden exige pasos muy cortos. `hopfion_eta`, `hopfion_quiral` y `hopfion_P` reducen el paso solos cuando la energía sube y lo avisan en pantalla. `DTAU=...` fija el paso inicial en unidades de h².
-- **k ≥ 2:** el nudo se contrae por debajo de lo que resuelven mallas con h ≈ 0,06 y se pierde. Es una limitación declarada en el preprint.
+- **k ≥ 2 (versión 1.0):** el nudo se contrae por debajo de lo que resuelven mallas con h ≈ 0,06 y se pierde. Es una limitación declarada en el preprint.
 - **Cola en la caja de lado 12:** con k = 0 y k = 0,5 la pared contamina el ajuste de la cola. Por ejemplo, k = 0 da un k_ef = 0,37 espurio.
 - **Ficheros `.dat` antiguos:** la columna de energía normalizada es ahora E/(32√2π²), en la normalización de Sutcliffe (2007). Los `.dat` generados antes de esta versión traían E/504.
 
