@@ -382,9 +382,28 @@ $\alpha$ y la dinámica completa del campo & \st{A} \\
 % =====================================================================
 \section{Estructura del leptón en las extendidas}\label{sec:extendidas}
 
-Se ha minimizado numéricamente la energía del director y se ha comprobado que forma un hopfión estable, con la energía de la literatura a menos del 1~\% (Sutcliffe, 2007), cuyo flujo es un anillo de vórtice con remolino. Todo \st{N}, con programas reproducibles (\prog{hopfion.cpp}, \prog{flujo.py}).
+Se ha minimizado numéricamente la energía del director y se ha comprobado que forma un hopfión, con la energía de la literatura dentro de la incertidumbre numérica, que es un mínimo de la energía y no un punto de silla, y cuyo flujo es un anillo de vórtice con remolino. Se ha comprobado también que un nudo así puede formarse desde el vacío, por fusión local del orden y un flujo helicoidal, y cómo responde a la fusión. Todo \st{N}, con programas reproducibles (apéndice~A).
 
-Para validar los cálculos numéricos realizados se ha utilizado una malla $150^3$ en una caja de 12 unidades de longitud y se ha estimado la energía de Faddeev--Skyrme $\int\bigl[\partial_i\vb{n}\cdot\partial_i\vb{n}+\tfrac12F_{ij}F_{ij}\bigr]$: $E/(32\sqrt2\,\pi^2)=1,219$ frente a ${\sim}1,21$ de la literatura (Sutcliffe, 2007), con una carga de Hopf $Q=-0,979$ y un virial $E_2/E_4=0,965$ \st{N}.
+En el modelo, la energía del nudo es casi nula: es un cierre topológico, y toda la masa de la partícula está en la circulación en $\eta$ (postulado~7; la ausencia de una torre de estados de rotación exige $E_{\mathrm{nudo}}\lesssim10$~eV). Los cálculos de esta sección usan el modelo de Faddeev--Skyrme en unidades adimensionales ($\ell=\sqrt{\kappa_4/\kappa_2}$ para las longitudes y $\sqrt{\kappa_2\kappa_4}$ para las energías): describen la forma y la estabilidad del nudo, no su energía en eV.
+
+\apartado{Convergencia.} La energía de Faddeev--Skyrme, $\int\bigl[\partial_i\vb{n}\cdot\partial_i\vb{n}+\tfrac12F_{ij}F_{ij}\bigr]$, se ha calculado con varias mallas y cajas (borde $\vb{n}=\hat{\vb{z}}$ fijo):
+
+\begin{center}
+\small
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Malla & Caja & Paso $h$ & $E/(32\sqrt2\,\pi^2)$ & $E_2/E_4$ & $Q$ \\
+\midrule
+$61^3$  & 5,4 & 0,090 & 1,280 & 0,66 & $-0,961$ \\
+$81^3$  & 7,2 & 0,090 & 1,241 & 0,78 & $-0,968$ \\
+$101^3$ & 9,0 & 0,090 & 1,224 & 0,86 & $-0,971$ \\
+$121^3$ & 9,0 & 0,075 & 1,232 & 0,87 & $-0,980$ \\
+$150^3$ & 12  & 0,081 & 1,219 & 0,97 & $-0,979$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Domina el efecto de la caja: con el mismo paso, al agrandarla de 5,4 a 9 la energía baja un 4~\% y $E_2/E_4$ se acerca a~1, que es lo que exige el teorema del virial en espacio infinito. Afinar la malla actúa en sentido contrario: con caja~9, al pasar de $h=0,090$ a $0,075$ la energía sube un 0,6~\% y $Q$ se acerca a~$-1$. Los dos errores tienen signos opuestos y se compensan en parte. El resultado es $E/(32\sqrt2\,\pi^2)=1,23\pm0,02$, compatible con el de la literatura, $\approx1,22$ (Battye y Sutcliffe, 1998; Sutcliffe, 2007) \st{N}. El radio del anillo (donde $n_z=-1$) apenas depende de la malla y crece despacio con la caja (de 0,97 a 1,14); el radio cuadrático medio, en cambio, depende mucho de ella, y no se usa para comparar tamaños.
 
 \apartado{Flujo.} Con la relación de Mermin--Ho (vorticidad = retorcimiento del director), el flujo del hopfión es un anillo de vórtice con remolino: 66~\% de la energía en la circulación poloidal y 34~\% en la toroidal, con momento angular neto alrededor del eje libre. Su helicidad es $16\pi^2Q$ \st{N}. El reparto no es una proporción fija: en el mapa de Hopf analítico tiende a 50~\% / 50~\%, frente al 66~\% de poloidal del hopfión (\prog{reparto\_flujo.py}); depende de la forma del mínimo de energía, no de la topología \st{N}.
 
@@ -419,9 +438,19 @@ Para validar los cálculos numéricos realizados se ha utilizado una malla $150^
 \label{fig:espin-flujo}
 \end{figure}
 
-\apartado{Estabilidad.} Las soluciones son mínimos locales de la energía (flujo de gradiente), luego estables frente a perturbaciones pequeñas que respetan la forma del giro (Lagrange--Dirichlet).
+\apartado{Estabilidad.} El flujo de gradiente lleva a un punto de energía estacionaria, que podría ser un mínimo o un punto de silla. Para distinguirlo, el nudo relajado (malla $61^3$, caja~5,4) se ha deformado de forma asimétrica: estirado un 25~\% en $x$, comprimido un 20~\% en $z$ y con un ruido aleatorio de amplitud 0,05 en cada punto (\prog{perturba.py}). La deformación rompe la simetría axial (asimetría $x$--$y$ de 0 a 0,19) y sube la energía un 46~\%. Al relajarlo de nuevo, vuelve a la misma energía con cinco cifras ($E/(32\sqrt2\,\pi^2)=1,27995$), con la misma carga de Hopf y simetría axial exacta. Frente a esta deformación, el nudo es un mínimo y no un punto de silla \st{N}, como se sabe del hopfión de carga~1 (Battye y Sutcliffe, 1998). No es una prueba frente a todas las deformaciones posibles; las que dependen de las compactadas requieren un cálculo en 4D (sección~\ref{sec:abierto}, punto~\ref{ab:estab4d}).
 
-\apartado{Liberación de la energía del nudo: aniquilación.} Mientras $Q=1$ la energía no puede bajar del mínimo: toda deformación continua conserva $Q$, y existe una cota inferior $E\geq c\,|Q|^{3/4}$ (Vakulenko y Kapitanskii, 1979) \st{D}. Solo hay dos formas de liberarla. (1)~Deshacer el nudo en un punto donde el director quede indefinido, es decir, fundiendo localmente el orden (un núcleo de fase isótropa); ese núcleo cuesta energía, así que hay una barrera y el nudo no se deshace solo \st{D sobre la topología; H sobre la fase}. (2)~Encontrarse con un nudo de carga opuesta, $Q=-1$: la carga total es~0, el conjunto puede deshacerse de forma continua y se libera toda la energía de ambos. Es la imagen de la aniquilación de partícula y antipartícula, sin mecanismo añadido \st{H}. La energía liberada sale como radiación, al menos dos fotones por conservación del impulso; la dinámica del fotón en el hyle queda para un trabajo propio \st{A}.
+\apartado{Formación del nudo desde el vacío.} Si el nudo es la huella de la pulsación en el director, tiene que poder formarse. Se ha simulado una nucleación: una región donde el orden se funde (el director pierde su rigidez y lo agita el ruido térmico) y luego se enfría, mientras la pulsación induce un flujo helicoidal, un anillo de vórtice con remolino, que por la relación de Mermin--Ho favorece las texturas cuya vorticidad se alinea con él (\prog{nucleacion.cpp}). Al volver a ordenarse el medio, el flujo deja atrapada una textura enlazada: la fusión con flujo ata nudos desde el vacío \st{N}. Sin flujo, o con un flujo demasiado débil, la zona fundida vuelve al vacío. El signo de la helicidad del flujo elige el signo de la carga de Hopf, y la carga del nudo crece con la torsión del flujo: un flujo poco retorcido ata nudos de carga~1, y uno más retorcido, de carga 2 o~3 \st{N, pocas semillas}. Es el mecanismo de Kibble--Zurek: al enfriarse más deprisa de lo que el medio puede reajustarse, la textura queda congelada.
+
+\apartado{El nudo frente a la fusión.} Las nucleaciones de la pulsación están siempre en la interfaz A/\Cst, como el nudo, y al producirse funden el orden en toda la región que este ocupa. Se ha comprobado qué le ocurre al nudo en esa situación (\prog{nucleacion\_persistente.cpp}, \prog{nucleacion\_pulsos.cpp}; malla $80^3$, caja~6,2) \st{N}:
+\begin{itemize}[leftmargin=*]
+\item \textbf{Una fusión permanente sobre el nudo lo desata}, incluso con el término de cuarto orden, y también sin ruido térmico: basta con que el medio pierda la rigidez el tiempo suficiente. Por la misma razón, una zona fundida no puede sustituir al término de cuarto orden: sin él, el nudo se desata con o sin núcleo fundido.
+\item \textbf{Una fusión breve y repetida es inocua}: con pulsos rápidos el nudo sobrevive aunque el medio esté fundido hasta un 45~\% del tiempo. Lo que decide es la duración de cada episodio fundido, comparada con el tiempo de respuesta del nudo; ni el ruido ni la semilla cambian el resultado.
+\item \textbf{En un medio ordenado, el nudo no cambia de carga}: sometido a un flujo permanente alineado con él, conserva $Q=1$ aunque el mismo flujo, actuando desde el vacío, ate nudos de carga~2.
+\end{itemize}
+En el modelo, una nucleación dura una fracción del periodo de Compton, unos $10^{-21}$~s, mientras que el tiempo de respuesta de un nudo de energía $\lesssim10$~eV es de al menos $\hbar/E\approx7\times10^{-17}$~s. Las nucleaciones de la pulsación son, por tanto, inocuas con mucho margen \st{H, traducción del juguete al modelo}. La dinámica del juguete es un flujo de gradiente sin inercia: su tiempo es de relajación, no físico, y lo robusto es la existencia del umbral, no su valor. Una nucleación que no se apagara desataría el nudo; es la base del mecanismo propuesto para la ausencia de estados de espín~$\tfrac32$ (sección~\ref{sec:abierto}, punto~\ref{ab:compactas}).
+
+\apartado{Liberación de la energía del nudo: aniquilación.} Mientras $Q=1$ la energía no puede bajar del mínimo: toda deformación continua conserva $Q$, y existe una cota inferior $E\geq c\,|Q|^{3/4}$ (Vakulenko y Kapitanskii, 1979) \st{D}. Solo hay dos formas de liberarla. (1)~Deshacer el nudo en un punto donde el director quede indefinido, es decir, fundiendo localmente el orden (un núcleo de fase isótropa); ese núcleo cuesta energía, así que hay una barrera y el nudo no se deshace solo \st{D sobre la topología; H sobre la fase}; la simulación confirma que una fusión prolongada lo desata y una breve no (apartado anterior). (2)~Encontrarse con un nudo de carga opuesta, $Q=-1$: la carga total es~0, el conjunto puede deshacerse de forma continua y se libera toda la energía de ambos. Es la imagen de la aniquilación de partícula y antipartícula, sin mecanismo añadido \st{H}. La energía liberada sale como radiación, al menos dos fotones por conservación del impulso; la dinámica del fotón en el hyle queda para un trabajo propio \st{A}.
 
 % =====================================================================
 \section{Lo descartado}\label{sec:descartado}
@@ -459,7 +488,7 @@ Estructura compacta (anchura, forma) como origen de $g-2$ & $g=2$ exacto & En Fo
 
 Trece problemas sin resolver; el primero decide si el modelo explica la anomalía o solo el valor base $g=2$.
 
-\begin{enumerate}[label=\arabic*.,leftmargin=*]
+\begin{enumerate}[label=\arabic*.,ref=\arabic*,leftmargin=*]
 
 \item \label{ab:g2}\textbf{La anomalía $g-2=0,00116$.} Vía más prometedora \st{H}: el arrastre propio no cambia la trayectoria de la pulsación pero sí su velocidad efectiva, como el medio que arrastra la luz en el experimento de Fizeau. Si entra en la corriente de carga y no en la masa ni en el espín, $a=v_a/c$, con $v_a\propto\alpha$. Falta calcular $v_a$ a partir del acoplamiento de Coulomb y ver si la geometría da el $2\pi$. Otra fuente posible: la textura del nudo en las extendidas (corriente orbital con $g=1$). Conexión posible con el postulado~6 \st{H, especulativa}: en un medio que gira, el plano de polarización de la luz es arrastrado en $(n_g-1/n_\varphi)\,\Omega/c$ por unidad de longitud, que se anula para $n=1$ (Player, 1976; Jones, 1976; Götte, Barnett y Padgett, 2007). Si la pulsación ve el hyle con índice~1, su marco no sigue la vorticidad del arrastre (marco anclado, $g=2$); si el arrastre propio aparta su velocidad efectiva de $c$, el anclaje deja de ser perfecto y $g$ se separa de~2. El marco anclado y la anomalía serían entonces el mismo efecto. Plan: (1)~calcular $c_1$ en $a=c_1\,v_a/c$ con la ecuación espinorial; (2)~calcular $c_2$ en $v_a/c=c_2\,\alpha$ a partir de la circulación cuantizada en $\eta$ y de la respuesta del hyle; (3)~comprobar $c_1c_2=1/2\pi$ (Schwinger). Advertencia de circularidad: usar el valor medido de $a$ para obtener $v_a$ y de ahí $\alpha$ no predice $\alpha$, solo comprueba el coeficiente $1/2\pi$; $\alpha$ solo quedaría predicha si $v_a$ se calcula sin introducir $e$ ni $a$.
 
@@ -589,6 +618,12 @@ Programa & Qué calcula & Método & Sección \\
 \prog{reposo2}, \prog{umbral}, \prog{evolucion}, \prog{anclada}, \prog{derrick}, \prog{cuartico}, \prog{giro} & Vías escalares descartadas & Ecuación de ondas radial o axisimétrica, diferencias finitas & \ref{sec:descartado} \\
 \addlinespace
 \prog{hopfion\_P.cpp} & Giro del director en el tiempo a momento angular fijo, con o sin cuarto orden & Flujo de gradiente con $\omega=S/(2I)$ recalculado en cada paso & \ref{sec:descartado} \\
+\addlinespace
+\prog{perturba.py} & Deformación asimétrica de un nudo relajado (prueba de punto de silla) & Estiramiento, compresión y ruido; se vuelve a relajar con \prog{hopfion.cpp} & \ref{sec:extendidas} \\
+\addlinespace
+\prog{nucleacion.cpp} & Formación del nudo desde el vacío: fusión local, enfriamiento y flujo helicoidal & Director con grado de orden $S^2=\max(0,1-T)$, ruido térmico y término $-\lambda\!\int S^3\vb{\Omega}\cdot\vb{B}$ & \ref{sec:extendidas} \\
+\addlinespace
+\prog{nucleacion\_persistente.cpp}, \prog{nucleacion\_pulsos.cpp} & El nudo frente a una fusión permanente o pulsada & Ídem, con un núcleo fundido fijo o intermitente & \ref{sec:extendidas} \\
 \addlinespace
 \prog{reparto\_flujo.py} & Reparto poloidal/toroidal del flujo, en el mapa de Hopf analítico y en las soluciones & FFT & \ref{sec:extendidas} \\
 \addlinespace
