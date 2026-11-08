@@ -455,7 +455,7 @@ En el modelo, una nucleación dura una fracción del periodo de Compton, unos $1
 % =====================================================================
 \section{Lo descartado}\label{sec:descartado}
 
-Siete vías probadas y descartadas, cada una con su razón; delimitan qué necesita el modelo.
+Trece vías probadas y descartadas, cada una con su razón; delimitan qué necesita el modelo. Las seis últimas se añadieron en la versión~1.1.
 
 \begin{center}
 \small
@@ -476,13 +476,25 @@ Quiralidad en lugar del cuarto orden & El nudo se deshace ($q=\pm0,8$, $k=1$) & 
 Giro del director en el tiempo, a momento angular fijo, en lugar del cuarto orden & El giro se acelera hasta $\omega\approx1,7>k$ y el nudo se deshace ($Q$ de $-0,97$ a~0; $c_4=0$, $k=1$) & Virial: el equilibrio exige $\omega^2=k^2+E_2/(3I)>k^2$, y entonces la cola radia; el mecanismo de Volovik y Mineev usa momento de traslación \\
 \addlinespace
 Estructura compacta (anchura, forma) como origen de $g-2$ & $g=2$ exacto & En Foldy--Wouthuysen el término lineal solo usa la carga media del modo más bajo \\
+\addlinespace
+Campo estático del nudo como origen de $g-2$ & Incompatible & Chocaba con el radio de Darwin, que fija el temblor en $\xi_0$; la vía que queda es la de Welton (sección~\ref{sec:abierto}, punto~\ref{ab:g2}) \\
+\addlinespace
+Energía del nudo $\approx m_ec^2$, masa de Kaluza--Klein del director y cola de Yukawa & Retiradas & Contaban dos veces la masa, que está toda en la circulación; con el giro que avanza a $c$ queda el hopfión puro, sin masa ni cola \\
+\addlinespace
+Tamaño del nudo fijado por las capas del esméctico, $\sqrt{\lambda\Delta}$ (\prog{hopfion\_capas.cpp}) & El radio no sigue a $\sqrt{\lambda\Delta}$: $R/R_{\mathrm{control}}\approx0,90$ sin depender de $\lambda$ ni de $\Delta$ \st{N} & Solo el anclaje del director en las interfaces acopla los tamaños, y débilmente \\
+\addlinespace
+Tamaño del nudo fijado por la dimensión compacta (\prog{hopfion\_compacto.cpp}) & Al encoger la compacta el nudo se aplasta, pero no se reduce en las extendidas \st{N} & El aparente paso a un «tubo enrollado» se desplazaba al afinar la malla: era un efecto numérico \\
+\addlinespace
+Zona fundida permanente en lugar del cuarto orden & El nudo se desata, con o sin término de cuarto orden \st{N} & Sin rigidez, el nudo se escapa por la zona blanda (sección~\ref{sec:extendidas}) \\
+\addlinespace
+Forzado de más torsión, a igual energía, como origen de nudos de carga alta & Ata nudos de carga~1 \st{N} & Con flujo permanente, la carga la decide la intensidad del flujo, no su torsión \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
 \apartado{Restricción que deja la quiralidad \st{D}.} Un término quiral en la energía da masas distintas a cargas de Hopf $+1$ y $-1$, es decir, a partícula y antipartícula, lo que contradice la igualdad de masas de electrón y positrón. En el sector del electrón debe ser despreciable.
 
-\apartado{Errores corregidos durante el trabajo.} Un cálculo de $g$ con un director (vector) que gira dio primero $g=2$ por omitir el factor~2 de las densidades de impulso canónicas; el valor correcto es $g=1$ (orbital). Es lo que llevó a la ecuación espinorial.
+\apartado{Errores corregidos durante el trabajo.} Un cálculo de $g$ con un director (vector) que gira dio primero $g=2$ por omitir el factor~2 de las densidades de impulso canónicas; el valor correcto es $g=1$ (orbital). Es lo que llevó a la ecuación espinorial. En la versión~1.0: (i)~se afirmaba que el orden $\tfrac32$ es equivalente al $-\tfrac12$ y que eso explicaba la ausencia de estados de espín~$\tfrac32$; la equivalencia es trivial y no explica nada, y se ha sustituido por el mecanismo de la sección~\ref{sec:abierto}, punto~\ref{ab:compactas}; (ii)~había dos definiciones de la carga (el caudal de la circulación y la circulación en la interfaz), y solo queda la segunda; (iii)~la coincidencia del radio de la interfaz con $\xi_0$ se presentaba como comprobación, cuando $\xi_0$ se define a partir de la masa; (iv)~el material del hopfión con giro en $\eta$ suponía un giro estático, incompatible con el postulado~2, y se ha retirado.
 % =====================================================================
 \section{Lo abierto}\label{sec:abierto}
 
@@ -620,6 +632,10 @@ Programa & Qué calcula & Método & Sección \\
 \prog{reposo2}, \prog{umbral}, \prog{evolucion}, \prog{anclada}, \prog{derrick}, \prog{cuartico}, \prog{giro} & Vías escalares descartadas & Ecuación de ondas radial o axisimétrica, diferencias finitas & \ref{sec:descartado} \\
 \addlinespace
 \prog{hopfion\_P.cpp} & Giro del director en el tiempo a momento angular fijo, con o sin cuarto orden & Flujo de gradiente con $\omega=S/(2I)$ recalculado en cada paso & \ref{sec:descartado} \\
+\addlinespace
+\prog{hopfion\_capas.cpp} & Hopfión en una lámina de esméctico con energía de capas (de Gennes) y acoplamiento $d=d_0\cos\theta$ & Capas minimizadas de forma exacta (FFT en $x,y$ y Thomas en $z$) & \ref{sec:descartado} \\
+\addlinespace
+\prog{hopfion\_compacto.cpp} & Hopfión con una dirección periódica que se encoge & Flujo de gradiente con continuación en el periodo & \ref{sec:descartado} \\
 \addlinespace
 \prog{perturba.py} & Deformación asimétrica de un nudo relajado (prueba de punto de silla) & Estiramiento, compresión y ruido; se vuelve a relajar con \prog{hopfion.cpp} & \ref{sec:extendidas} \\
 \addlinespace
