@@ -50,7 +50,7 @@
 //
 // MEDIDAS: Q por la fórmula de hopfq.py, Q = (1/16π²) ∫ A·B, con A en el gauge A_z = 0
 //   (A_x = ∫ B_y dz, A_y = −∫ B_x dz). Durante la fusión Q no es un entero (el director está desordenado).
-//   Referencia: el hopfión relajado tiene E2 + E4 ≈ 544 (sección 3 del preprint; caja 12, malla 150³);
+//   Referencia: el hopfión relajado tiene E2 + E4 ≈ 544 (sección 4 del preprint; caja 12, malla 150³);
 //   en cajas pequeñas la energía es mayor porque el borde lo comprime.
 //
 // COMPROBACIONES (./nucleacion test):

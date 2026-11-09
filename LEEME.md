@@ -120,14 +120,15 @@ K=1   OMP_NUM_THREADS=4 ./hopfion_eta 150 12 1.0 30000
 python3 flujo.py n_final_N150.bin
 ```
 
-Da el reparto de la energía del flujo: 66 % poloidal, 34 % toroidal.
+Da el reparto de la energía del flujo: 66 % poloidal, 34 % toroidal (velocidad en el gauge de Coulomb).
 
-**Figuras de la sección 3:**
+**Figura de la sección 4:**
 
 ```
 python3 figura_hopfion.py n_final_N150.bin
-python3 figura_hopfion.py n_eta_N150_K1.bin
 ```
+
+(La figura con giro en η, `n_eta_N150_K1.bin`, es de la versión 1.0.)
 
 **Tamaño y cola** (radio del anillo y ajuste de Yukawa k_ef; la cola es material de la versión 1.0):
 
@@ -220,7 +221,7 @@ Los tres programas de hopfión guardan el `.bin` cada 2000 iteraciones. Para con
 - **Cota de energía:** los términos del giro son positivos. Por eso, mientras Q = 1, la energía con giro nunca puede bajar de la de k = 0 (544). Si baja, el nudo se ha deshecho en la malla.
 - **Malla:** con h = L/(N − 1) mayor que unos 0,09 el nudo se deshace, incluso con k = 0.
 - **Paso de tiempo:** el flujo de gradiente es explícito. Con nudos pequeños (k grande), el término de cuarto orden exige pasos muy cortos. `hopfion_eta`, `hopfion_quiral` y `hopfion_P` reducen el paso solos cuando la energía sube y lo avisan en pantalla. `DTAU=...` fija el paso inicial en unidades de h².
-- **k ≥ 2 (versión 1.0):** el nudo se contrae por debajo de lo que resuelven mallas con h ≈ 0,06 y se pierde. Es una limitación declarada en el preprint.
+- **k ≥ 2 (versión 1.0):** el nudo se contrae por debajo de lo que resuelven mallas con h ≈ 0,06 y se pierde. Era una limitación declarada en la versión 1.0 del preprint; el material con k ≠ 0 se ha retirado.
 - **Cola en la caja de lado 12:** con k = 0 y k = 0,5 la pared contamina el ajuste de la cola. Por ejemplo, k = 0 da un k_ef = 0,37 espurio.
 - **Ficheros `.dat` antiguos:** la columna de energía normalizada es ahora E/(32√2π²), en la normalización de Sutcliffe (2007). Los `.dat` generados antes de esta versión traían E/504.
 

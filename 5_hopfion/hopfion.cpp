@@ -4,7 +4,7 @@
 // Energía (Faddeev–Skyrme; convención de Battye y Sutcliffe):
 //     E = ∫ [ ∂_i n·∂_i n  +  ½ F_ij F_ij ] d³x ,   F_ij = n·(∂_i n × ∂_j n)
 //   2.º término = término de cuarto orden (tipo Skyrme / nuestro K): frena el colapso.
-//   Referencia: en la normalización E/(32√2π²), E(Q=1) ≈ 1,21 (Sutcliffe, Proc. R. Soc. A 463, 3001 (2007), arXiv:0705.1468).
+//   Referencia: en la normalización E/(32√2π²), E(Q=1) ≈ 1,22 (Battye y Sutcliffe, PRL 81, 4798 (1998); Sutcliffe, Proc. R. Soc. A 463, 3001 (2007), arXiv:0705.1468).
 //   (El valor 504 de Battye y Sutcliffe, PRL 81, 4798 (1998), malla 100³, resultó ser una subestimación.)
 //   Comprobación independiente de la norma: en el mínimo, E2 = E4 (teorema del virial / Derrick).
 // Método: flujo de gradiente proyectado sobre la esfera; n fijo = (0,0,1) en el borde.
