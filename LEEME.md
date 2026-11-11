@@ -246,3 +246,7 @@ Juguete unidimensional en el anillo η ∈ [0, 2π). Una onda antiperiódica (Sc
 Resultado: el patrón estático deja a la onda solo parte del momento (0,355 con λ² = 10; 0,232 con λ² = 12; 0,104 con λ² = 16). El estado con P = ½ existe con el patrón intacto. El medio lleva el resto, la deriva es v ∝ 1/M y el coste de energía de la deriva también es ∝ 1/M. Con M = 100 y λ² = 10: v = 0,0025 y ΔE = 1,8×10⁻⁴. En la evolución, P se conserva y el patrón gira a la v prevista hasta la quinta cifra.
 
 Límite del juguete: en una teoría clásica P puede tomar cualquier valor. El ½ se impone aquí como objetivo; su cuantización exacta sale del argumento de simetría del preprint (antiperiodicidad del conjunto onda más patrón), que es cuántico.
+
+`10_polaron/solapamientos.py` calcula el solapamiento |⟨Ψ(η)|Ψ(η − π/2)⟩| de dos ondas de Mathieu de orden ½ con las líneas de zonas de mayor índice perpendiculares (imagen de dos electrones de espín opuesto). Da 0,83 con q = −0,64, 0,69 con q = −1 y 0,05 con q = −10. Con el |q| moderado que se espera para el electrón, la separación geométrica es parcial.
+
+`preprint/figuras_src/fig00_ensamblaje.py` dibuja la figura de ensamblaje del electrón (espacio ordinario y disco compacto en tres puntos).

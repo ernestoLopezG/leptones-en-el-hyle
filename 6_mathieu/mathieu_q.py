@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# mathieu_q.py — funciones angulares de Mathieu para q negativo grande  (Claude, 23-10-2026)
+# mathieu_q.py — funciones angulares de Mathieu para q negativo  (Claude, 23-10-2026)
 # Ecuación: y'' + (a − 2q·cos 2η) y = 0.  Con q < 0 el potencial 2q·cos 2η tiene sus pozos en η = 0 y η = π.
 # Solución de Floquet de orden ν: y = Σ_k A_k · e^{i(2k+ν)η}  →  (a − (2k+ν)²) A_k − q (A_{k−1} + A_{k+1}) = 0  (método de Hill)
 # ν = 0 → ce₀ (periódica, periodo π);  ν = ½ → la del modelo (antiperiódica en una vuelta: y(η+2π) = −y(η)).
@@ -11,7 +11,7 @@ def floquet(q, nu, K=None):
     w, v = np.linalg.eigh(M); i = 0                            # el valor propio más bajo (estado fundamental)
     return w[i], k, v[:, i]
 eta = np.linspace(0, 2*np.pi, 2001)
-qs = [-10, -100, -1000]
+qs = [-1, -10, -100]   # q moderado (el esperado para el electrón) y valores mayores, ilustrativos
 fig, ax = plt.subplots(1, 3, figsize=(16, 4.8))
 for q in qs:
     a, k, A = floquet(q, 0.0)
@@ -28,8 +28,8 @@ for a_ in ax:
     a_.axvline(0, c='k', lw=.5); a_.axvline(180, c='k', lw=.5)
 ax[0].set_title('ce₀(η): orden entero (periodo π)')
 ax[1].set_title('Orden ν = ½: parte real de la onda que circula\n(cambia de signo tras una vuelta)')
-ax[2].set_title('Intensidad |Ψ|² de la onda de orden ½\n(dos máximos opuestos: las nucleaciones)')
-fig.suptitle('Funciones angulares de Mathieu con q negativo grande: se concentran en los pozos η = 0° y η = 180°', fontsize=11)
+ax[2].set_title('Intensidad |Ψ|² de la onda de orden ½\n(dos máximos opuestos: las zonas de mayor índice)')
+fig.suptitle('Funciones angulares de Mathieu con q negativo: al crecer |q| se concentran en los pozos η = 0° y η = 180°', fontsize=11)
 plt.tight_layout(); plt.savefig('mathieu_q_negativo.png', dpi=120); print('-> mathieu_q_negativo.png')
 for q in qs:
     a, k, A = floquet(q, 0.5); a0, *_ = floquet(q, 0.0)
