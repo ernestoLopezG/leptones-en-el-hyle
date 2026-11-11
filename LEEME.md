@@ -235,3 +235,14 @@ Los tres programas de hopfión guardan el `.bin` cada 2000 iteraciones. Para con
 `hopfion_burbuja.cpp` relaja un hopfión dentro de una región esférica ordenada de radio Rb (borde de anchura w, orden S(r) que cae a cero), sin borde fijo y con la rigidez pesada por S² y S⁴; fuera, fondo uniforme o de direcciones aleatorias. `hopfq_burbuja.py` calcula Q con ventana. `barrido_burbuja.sh` hace el barrido del preprint (unas 5 h con 4 núcleos).
 
 Resultado (h ≈ 0,09, w = 0,4): con Rb = 2 y 3 el nudo se escapa; con Rb = 4 está escapándose; con Rb = 6 y 8 sobrevive (E/(32√2π²) ≈ 1,16–1,19, Q ≈ −0,97). El fondo aleatorio da lo mismo que el uniforme.
+
+## 10_polaron — la circulación repartida entre la onda y el patrón (v1.1, segundo arbitraje)
+
+Juguete unidimensional en el anillo η ∈ [0, 2π). Una onda antiperiódica (Schrödinger, ħ = 1, radio 1) siente un potencial −λφ, y el medio φ, con inercia M, responde a la intensidad: M φ_tt = −κφ + Dφ_ηη + λ|Ψ|². Las dos ecuaciones salen de una sola energía, así que E y el momento total P = P_onda + P_medio, con P_medio = −M∫φ_t φ_η, se conservan. Se trabaja en el sector de dos zonas (componentes k = ½ + 2n).
+
+- `polaron_anillo.py` calcula el estado estático (patrón quieto) y el que deriva a velocidad angular v con P = ½. Usa la iteración autoconsistente en el sistema que deriva y una bisección en v. κ = 1 y D = 0,2. Escribe `resultado.txt` (unos 5 min).
+- `evolucion.py lam M` evoluciona en el tiempo el estado que deriva (paso partido para la onda, Verlet para el medio). Comprueba que P se conserva y que el patrón gira a la v prevista (`evolucion_M100.txt`, unos 20 s).
+
+Resultado: el patrón estático deja a la onda solo parte del momento (0,355 con λ² = 10; 0,232 con λ² = 12; 0,104 con λ² = 16). El estado con P = ½ existe con el patrón intacto. El medio lleva el resto, la deriva es v ∝ 1/M y el coste de energía de la deriva también es ∝ 1/M. Con M = 100 y λ² = 10: v = 0,0025 y ΔE = 1,8×10⁻⁴. En la evolución, P se conserva y el patrón gira a la v prevista hasta la quinta cifra.
+
+Límite del juguete: en una teoría clásica P puede tomar cualquier valor. El ½ se impone aquí como objetivo; su cuantización exacta sale del argumento de simetría del preprint (antiperiodicidad del conjunto onda más patrón), que es cuántico.
