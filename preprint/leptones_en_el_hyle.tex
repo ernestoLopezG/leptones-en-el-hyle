@@ -27,6 +27,7 @@
 \usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{xltabular}
 \usepackage{array}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \usepackage{enumitem}
@@ -469,12 +470,18 @@ La dinámica del juguete es un flujo de gradiente sin inercia: su tiempo es de r
 
 Trece vías probadas y descartadas, cada una con su razón; delimitan qué necesita el modelo. Las seis últimas se añadieron en la versión~1.1.
 
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{@{}Y Y Y@{}}
+{\footnotesize
+\begin{xltabular}{\textwidth}{@{}Y Y Y@{}}
 \toprule
 Vía & Resultado & Razón \\
 \midrule
+\endfirsthead
+\toprule
+Vía & Resultado & Razón \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
 Solitón escalar con umbral, frecuencia libre & Cae a estados con autoenlace ($\omega\approx0,88$) & Contradice el postulado de energía de autoenlace nula \\
 \addlinespace
 Solitón escalar con frecuencia anclada & Núcleo crítico: se disuelve o la meseta invade el espacio & Teorema de Derrick \\
@@ -500,9 +507,8 @@ Tamaño del nudo fijado por la dimensión compacta (\prog{hopfion\_compacto.cpp}
 Zona fundida permanente en lugar del cuarto orden & El nudo se desata, con o sin término de cuarto orden \st{N} & Sin rigidez, el nudo se escapa por la zona blanda (sección~\ref{sec:extendidas}) \\
 \addlinespace
 Forzado de más torsión, a igual energía, como origen de nudos de carga alta & Ata nudos de carga~1 \st{N} & Con flujo permanente, la carga la decide la intensidad del flujo, no su torsión \\
-\bottomrule
-\end{tabularx}
-\end{center}
+\end{xltabular}
+}
 
 \apartado{Restricción que deja la quiralidad \st{D, dada la identificación del signo de $Q$ con partícula y antipartícula, punto~\ref{ab:especular}, \st{H}}.} Un término quiral en la energía da masas distintas a cargas de Hopf $+1$ y $-1$, es decir, a partícula y antipartícula, lo que contradice la igualdad de masas de electrón y positrón. En el sector del electrón debe ser despreciable.
 
