@@ -39,3 +39,30 @@ Tp < 1. La profundidad del ablandamiento es T (S² baja a 1 − T).
    Lectura: sin fusión no puede cambiar Q (el director sigue definido en todas partes). El Q = −2.9 de la malla
    gruesa es un artefacto: con un flujo intenso los gradientes llegan a la escala de la malla, y la red permite una
    reconexión que en el continuo exigiría un punto fundido. Al afinar la malla desaparece.
+
+=== Mallas finas (barrido_ablandamiento.sh, ejecutado por Ernesto, 13-11-2026; caja 6,2) ===
+Q final (−0,98 ≈ intacto; 0 = desatado):
+                                N=80     N=96
+  permanente Tp=1.5 (fusión)    0        0
+  permanente Tp=0.9             0        0
+  permanente Tp=0.7             0        0
+  permanente Tp=0.5             0        −0.986
+  permanente Tp=0.3             −0.982   −0.988   (también con relajación larga)
+  pulsos P=0,004  Tp=1.5        −0.981   −0.987
+  pulsos P=0,004  Tp=0.9        −0.982   −0.988
+  pulsos P=0,004  Tp=0.6        −0.982   −0.988
+  pulsos P=0,04   Tp=1.5        0        −0.986
+  pulsos P=0,04   Tp=0.9        0        0
+  pulsos P=0,04   Tp=0.6        0        −0.988
+Lectura:
+- Pulsos breves (P = 0,004, mitad del tiempo encendidos): el nudo sobrevive siempre, también con FUSIÓN. El −0,295 de
+  la fusión pulsada en N=64 era efecto de la malla gruesa.
+- Pulsos diez veces más largos (P = 0,04): resultado dependiente de la malla y no monótono en la profundidad → el
+  umbral de duración está en esa escala; no hay que leer cada caso suelto.
+- Permanente: desata con T ≥ 0,7 en las dos mallas; T = 0,5 depende de la malla (desata en 80, no en 96);
+  T = 0,3 sobrevive. El umbral sube al afinar la malla: el desatado pasa por encogerse hasta la malla, así que el
+  umbral del continuo podría ser algo mayor que 0,5–0,7.
+- Formación (bloque 4 antiguo): NO INFORMA. Con caja 4,9 y anillo de flujo Rc = 1,8, en N=80 tampoco la fusión formó
+  nada (sin control positivo); en N=96 (h = 0,05) el esquema explícito se volvió inestable (E2+E4 ~ 3·10^5,
+  E2/E4 ≈ 0,06; Q no entero sin sentido). Bloque 4 rehecho con la configuración de producción (caja 6,2, s = 0,2–0,4,
+  como en barrido3.sh): bash barrido_ablandamiento.sh solo4.
