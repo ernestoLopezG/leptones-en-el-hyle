@@ -1,0 +1,25 @@
+Forma de las capas del nudo relajado frente al tamaño de la caja (forma_capas.sh, ejecutado por Ernesto, 13/14-11-2026)
+Mismo paso de malla (h ≈ 0,078), relax = 3,0.
+
+caja   N    E2+E4   E2/E4   R_rms   b/a por capa n_z:  -0,9   -0,6   -0,3    0,0    0,3    0,6
+ 6,2   80   565,45  0,729   1,601                     1,341  1,349  1,354  1,364  1,379  1,414
+ 7,4   96   556,21  0,802   1,801                     1,304  1,314  1,320  1,326  1,337  1,360
+ 9,9  128   547,62  0,920   2,198                     1,271  1,278  1,279  1,280  1,287  1,299
+12,4  160   545,82  1,024   2,658                     1,270  1,249  1,251  1,251  1,253  1,256
+(energía del hopfión en caja grande en la literatura: 544,35 en estas unidades)
+
+Lectura:
+- Capas interiores: elipses (residuo del ajuste 0,5–1,2 %); exteriores: óvalos en forma de huevo (residuo ~2 %,
+  abultan hacia fuera un 10–13 %).
+- La energía casi ha convergido (545,8 frente a 544,35: 0,3 %), pero la forma no: es normal, porque la energía es
+  estacionaria frente a cambios de forma (error de segundo orden) y la forma no.
+- b/a baja con la caja como 1/L con mucha precisión (residuos ~0,001 en las capas −0,6 a 0,3): el ajuste a + c/L da
+  un límite de caja infinita ≈ 1,13–1,15. El ajuste a + c/L² da ≈ 1,22, pero con residuos cinco veces mayores.
+  Cautela: las cajas pequeñas no estaban del todo relajadas (E2/E4 < 1), lo que mezcla dos efectos.
+- En la caja 12,4, b/a ≈ 1,25, a menos de un 0,5 % de la elipse del toro compacto del preprint original
+  (a/b = 1,10576/0,8883 = 1,245). Con la tendencia observada parece un valor de paso, no el límite.
+
+Predicción hecha ANTES de ejecutar la caja 15,5 (N = 200), con la ley 1/L ajustada:
+  capa n_z = 0: b/a ≈ 1,228 (−0,6: 1,231; −0,3: 1,232; 0,3: 1,231).
+  Si sale ≈ 1,23, sigue la tendencia y el 1,25 de la caja 12,4 era de paso.
+  Si se queda en ≈ 1,245–1,25, la tendencia se ha detenido y habría que mirarlo con mucho cuidado.
