@@ -78,6 +78,7 @@ Resultado: E/(32√2π²) = 1,23 ± 0,02 (literatura ≈ 1,22). Punto de silla: 
 bash barrido.sh rapido          # formación desde el vacío (barrido.sh … barrido5.sh: barridos de parámetros)
 bash barrido_persistente.sh     # núcleo fundido permanente, forzado ½ frente a 3/2 (unas 2,5 h con 4 núcleos)
 bash barrido_pulsos.sh          # fusión pulsada (unos 30 min)
+bash barrido_ablandamiento.sh    # ablandamiento (T < 1) frente a fusión, mallas 80 y 96 (1,5–2 h; «rapido»: unos 20 min)
 ```
 
 Resultados esperados: el signo de la helicidad del flujo elige el signo de Q y la carga crece con la torsión; una fusión permanente sobre el nudo lo desata (incluso con κ₄ y sin ruido); con pulsos breves sobrevive; en medio ordenado el nudo Q = 1 no cambia de carga bajo forzado alineado. Las cabeceras de cada programa explican los parámetros.
