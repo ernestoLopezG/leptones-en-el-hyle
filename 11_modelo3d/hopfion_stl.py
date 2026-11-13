@@ -9,9 +9,6 @@ con soportes. En impresoras de filamento (FDM) conviene imprimir cada capa por s
 """
 import sys, struct, numpy as np
 
-capas  = int(sys.argv[1]) if len(sys.argv) > 1 else 3
-anillos = int(sys.argv[2]) if len(sys.argv) > 2 else 8
-tam_mm = float(sys.argv[3]) if len(sys.argv) > 3 else 100.0
 
 def fibra(a, phi, n=400):
     """Fibra de Hopf: z1 = cos a·e^{it}, z2 = sin a·e^{i(t+phi)}, proyectada desde (0,0,0,1)."""
@@ -50,22 +47,30 @@ def guarda(nombre, tri):
             f.write(struct.pack('<12fH', *nrm, *a, *b, *c, 0))
     print(f"{nombre}: {len(tri)} triángulos")
 
-# capas: valores de a entre el alma (a=0) y el eje (a=pi/2)
-As = [np.pi/2*(k+1)/(capas+2) for k in range(capas)]
-curvas = {0: [fibra(0.0, 0.0)]}                      # el alma: circunferencia unidad
-for k, a in enumerate(As, 1):
-    curvas[k] = [fibra(a, 2*np.pi*j/anillos + 0.3*k) for j in range(anillos)]
-todas = np.concatenate([c for cs in curvas.values() for c in cs])
-escala = tam_mm/(todas.max(0) - todas.min(0)).max()
-# radio del tubo: la mitad de la distancia mínima entre anillos distintos, con margen
-pts = [c*escala for cs in curvas.values() for c in cs]
-dmin = min(np.min(np.linalg.norm(pts[i][::4, None, :] - pts[j][None, ::4, :], axis=2))
-           for i in range(len(pts)) for j in range(i+1, len(pts)))
-r = min(0.35*dmin, 1.6)
-print(f"tamaño {tam_mm:.0f} mm; distancia mínima entre anillos {dmin:.2f} mm; radio del tubo {r:.2f} mm")
-total = []
-for k, cs in curvas.items():
-    tri = [t for c in cs for t in tubo(c*escala, r)]
-    guarda(f"hopfion_capa{k}.stl" if k else "hopfion_alma.stl", tri); total += tri
-guarda("hopfion_todo.stl", total)
-np.save("curvas.npy", np.array([c*escala for cs in curvas.values() for c in cs]))
+if __name__ == '__main__':
+    capas  = int(sys.argv[1]) if len(sys.argv) > 1 else 3
+    anillos = int(sys.argv[2]) if len(sys.argv) > 2 else 6
+    tam_mm = float(sys.argv[3]) if len(sys.argv) > 3 else 120.0
+    mm_unidad = float(sys.argv[4]) if len(sys.argv) > 4 else None   # si se da, escala fija (mm por unidad del campo)
+    # capas: valores de a entre el alma (a=0) y el eje (a=pi/2)
+    # capas a n_z = -0,6, 0 y 0,6 (como en el nudo relajado): n_z = -cos 2a
+    nz = [-0.6, 0.0, 0.6] if capas == 3 else list(np.linspace(-0.6, 0.6, capas))
+    As = [0.5*np.arccos(-c) for c in nz]
+    curvas = {0: [fibra(0.0, 0.0)]}                      # el alma: circunferencia unidad
+    for k, a in enumerate(As, 1):
+        curvas[k] = [fibra(a, 2*np.pi*j/anillos + 0.3*k) for j in range(anillos)]
+    todas = np.concatenate([c for cs in curvas.values() for c in cs])
+    escala = mm_unidad if mm_unidad else tam_mm/(todas.max(0) - todas.min(0)).max()
+    # radio del tubo: la mitad de la distancia mínima entre anillos distintos, con margen
+    pts = [c*escala for cs in curvas.values() for c in cs]
+    dmin = min(np.min(np.linalg.norm(pts[i][::4, None, :] - pts[j][None, ::4, :], axis=2))
+               for i in range(len(pts)) for j in range(i+1, len(pts)))
+    r = min(0.35*dmin, 1.6)
+    print(f"tamaño {escala*(todas.max(0)-todas.min(0)).max():.0f} mm; distancia mínima entre anillos {dmin:.2f} mm; radio del tubo {r:.2f} mm")
+    total = []
+    for k, cs in curvas.items():
+        tri = [t for c in cs for t in tubo(c*escala, r)]
+        guarda(f"hopfion_capa{k}.stl" if k else "hopfion_alma.stl", tri); total += tri
+    guarda("hopfion_todo.stl", total)
+    np.save("curvas.npy", np.array([c*escala for cs in curvas.values() for c in cs]))
+    

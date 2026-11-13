@@ -1,2 +1,3 @@
 *.stl
-curvas.npy
+*.npy
+*.bin
