@@ -1,0 +1,41 @@
+Ablandamiento frente a fusión (13-11-2026; nube, 2 núcleos)
+
+Los programas ya admiten el ablandamiento sin cambios: S² = max(0, 1 − T), así que una «temperatura»
+T < 1 ablanda el orden sin fundirlo (S² = 1 − T > 0). En nucleacion.cpp es T0 < 1; en nucleacion_pulsos.cpp,
+Tp < 1. La profundidad del ablandamiento es T (S² baja a 1 − T).
+
+1) Nudo ya formado bajo un ablandamiento sobre su anillo (nucleacion_pulsos, forma=toro Rt=1 Rp=0.35,
+   N=64 L=4.9, relax=0.3, recupera=0.1, init = nudo relajado con Q = −0.982)
+
+   C="N=64 L=4.9 T0=0 thold=0 tauq=0 trampa=0 lam=0"
+   permanente, con ruido theta=0.05:
+     Tp=1.5 (fusión)  Q = 0      (se desata)
+     Tp=0.99          Q = 0
+     Tp=0.9           Q = 0
+     Tp=0.6           Q = 0
+     Tp=0.3           Q = −0.49  (a medio desatar)
+   permanente, sin ruido (theta=0):
+     Tp=1.5           Q = 0
+     Tp=0.9           Q = 0
+     Tp=0.6           Q = 0
+     Tp=0.3, relax=1  Q = −0.52
+   pulsado, periodo 0,004, sin ruido:
+     Tp=0.9 frac 0.5   Q = −0.978  E2+E4 = 585.8  (sobrevive intacto)
+     Tp=0.9 frac 0.25  Q = −0.979
+     Tp=0.6 frac 0.5   Q = −0.978
+     Tp=0.6 frac 0.25  Q = −0.979
+     Tp=1.5 frac 0.5   Q = −0.295  (la fusión con el mismo pulso lo desata)
+
+   Lectura: un ablandamiento pulsado no daña el nudo, aunque esté encendido la mitad del tiempo; una fusión con el
+   mismo pulso lo desata. Un ablandamiento PERMANENTE sobre el anillo lo desata incluso sin ruido. Mecanismo: en este
+   modelo el término de cuarto orden va pesado con S⁶ y el de segundo con S², así que ablandar quita mucho más κ₄ que
+   κ₂; en el anillo ablandado el nudo pierde la protección frente al teorema de Derrick, se encoge hasta la malla y se
+   desata. Depende de esa elección del modelo (S⁶) y está hecho con malla gruesa (N=64): falta comprobarlo en N=80–96.
+
+2) Formación desde el vacío con ablandamiento (nucleacion, Rc=1.8 lam=24 s=1 relax=0.3)
+     N=64 L=4.9 T0=2.0 (fusión)        Q = 0
+     N=64 L=4.9 T0=0.9 (ablandamiento) Q = −2.9   ← artefacto de malla
+     N=80 L=4.9 T0=0.9 (ablandamiento) Q = 0      (9 min con 2 núcleos)
+   Lectura: sin fusión no puede cambiar Q (el director sigue definido en todas partes). El Q = −2.9 de la malla
+   gruesa es un artefacto: con un flujo intenso los gradientes llegan a la escala de la malla, y la red permite una
+   reconexión que en el continuo exigiría un punto fundido. Al afinar la malla desaparece.
