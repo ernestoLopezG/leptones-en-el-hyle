@@ -12,16 +12,27 @@
 # Uso: bash barrido_ablandamiento.sh          (todo: del orden de 1,5–2 h con 4 núcleos)
 #      bash barrido_ablandamiento.sh rapido   (solo los bloques 1–3 en N=80: unos 20 min)
 #      bash barrido_ablandamiento.sh solo4    (solo la formación, bloque 4: unas 1–1,5 h con 4 núcleos)
+#      bash barrido_ablandamiento.sh solo5    (¿el Q = 2 sin fusión es artefacto?: unas 1,5–2 h)
 # Resultados: resultados_ablandamiento/resumen.dat (una línea por ejecución) y salida en pantalla.
 set -e
 export OMP_NUM_THREADS=${OMP_NUM_THREADS:-4}
 g++ -O3 -march=native -fopenmp nucleacion_pulsos.cpp -o nucleacion_pulsos
 g++ -O3 -march=native -fopenmp nucleacion.cpp -o nucleacion
-mkdir -p resultados_ablandamiento; cd resultados_ablandamiento; [ "$1" = "solo4" ] || rm -f resumen.dat
+mkdir -p resultados_ablandamiento; cd resultados_ablandamiento; [ "$1" = "solo4" ] || [ "$1" = "solo5" ] || rm -f resumen.dat
 P=../nucleacion_pulsos; F=../nucleacion
 NUC="forma=toro Rt=1.0 Rp=0.35 relax=0.3 recupera=0.1"
 c() { $P "$@" | grep FINAL; }
 
+if [ "$1" = "solo5" ]; then
+echo "########## 5) ¿el Q = 2 sin fusión (T0 = 0,9, s = 0,4) es artefacto de malla? ##########"
+# En N = 80 el ablandamiento profundo con flujo muy retorcido ató un nudo de carga 2 idéntico al de la fusión
+# (E2+E4 = 924,8). Sin fusión la topología lo prohíbe en el continuo. Pruebas: malla más fina con el mismo h
+# relativo (N = 96, caja 7,4, y N = 112, caja 7,4) y ablandamientos menos profundos.
+for t0 in 2.0 0.9; do $F N=96 L=7.4 Rc=1.8 relax=0.5 cada=100 cortes=2000 lam=24 s=0.4 T0=$t0 seed=1 tag=f5_N96_T0${t0}_s0.4 | grep FINAL; done
+$F N=112 L=7.4 Rc=1.8 relax=0.5 cada=100 cortes=2000 lam=24 s=0.4 T0=0.9 seed=1 tag=f5_N112_T00.9_s0.4 | grep FINAL
+for t0 in 0.7 0.5 0.3; do $F N=80 L=6.2 Rc=1.8 relax=0.5 cada=100 cortes=2000 lam=24 s=0.4 T0=$t0 seed=1 tag=f5_N80_T0${t0}_s0.4 | grep FINAL; done
+echo "== Resumen"; cat resumen.dat; exit 0
+fi
 if [ "$1" != "solo4" ]; then
 for N in 80 96; do
   [ "$1" = "rapido" ] && [ $N = 96 ] && break

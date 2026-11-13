@@ -66,3 +66,16 @@ Lectura:
   nada (sin control positivo); en N=96 (h = 0,05) el esquema explícito se volvió inestable (E2+E4 ~ 3·10^5,
   E2/E4 ≈ 0,06; Q no entero sin sentido). Bloque 4 rehecho con la configuración de producción (caja 6,2, s = 0,2–0,4,
   como en barrido3.sh): bash barrido_ablandamiento.sh solo4.
+
+=== Formación, configuración de producción (bloque 4 rehecho; Ernesto, 13-11-2026; N=80, caja 6,2) ===
+  fusión T0=2,  s=0,2 (2 semillas)          Q = −0,981   E2+E4 = 566,0    (nudo de carga 1, = el relajado en esta caja)
+  fusión T0=2,  s=0,4 (2 semillas)          Q = −1,961   E2+E4 = 924,8    (carga 2)
+  ablandamiento T0=0,9, s=0,2 (2 semillas)  Q = 0        E2+E4 ≈ 1,5–1,8  (no se forma nada)
+  ablandamiento T0=0,9, s=0,4 (2 semillas)  Q = −1,961   E2+E4 = 924,8    (¡carga 2 sin fusión!, mismo estado final que con fusión)
+  N=96, caja 7,4, s=0,2: fusión Q = −0,982 (E = 558,5); ablandamiento Q = 0
+Lectura: con flujo poco retorcido todo es como espera la topología (fusión ata, ablandamiento no). Con flujo muy
+retorcido, un ablandamiento profundo (S² baja a 0,1; el término de cuarto orden, a 0,001) ata el mismo nudo de carga 2
+que la fusión. En el continuo es imposible sin un punto donde el orden desaparezca; lo probable es que la red permita
+la reconexión cuando el orden es tan débil y el forzado tan intenso. Pendiente: bloque 5 (solo5), malla más fina y
+ablandamientos menos profundos. Si persiste al afinar la malla, la lectura sería que un ablandamiento muy profundo con
+forzado intenso funde en la práctica (en un medio real el propio forzado podría anular el orden en un punto).
