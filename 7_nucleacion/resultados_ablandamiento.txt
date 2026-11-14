@@ -79,3 +79,12 @@ que la fusión. En el continuo es imposible sin un punto donde el orden desapare
 la reconexión cuando el orden es tan débil y el forzado tan intenso. Pendiente: bloque 5 (solo5), malla más fina y
 ablandamientos menos profundos. Si persiste al afinar la malla, la lectura sería que un ablandamiento muy profundo con
 forzado intenso funde en la práctica (en un medio real el propio forzado podría anular el orden en un punto).
+
+=== Bloque 5 (Ernesto, 14-11-2026; s = 0,4, flujo muy retorcido) ===
+  N=96,  caja 7,4 (dx 0,077): fusión T0=2   Q = −1,964  E = 910,2
+  N=96,  caja 7,4 (dx 0,077): abland. T0=0,9 Q = −1,964  E = 910,1   (idéntico a la fusión)
+  N=112, caja 7,4 (dx 0,066): abland. T0=0,9 Q = 0       E = 1,7     (desaparece al afinar)
+  N=80,  caja 6,2: abland. T0 = 0,7 / 0,5 / 0,3            Q = 0       (nada)
+Lectura: el nudo de carga 2 sin fusión aparece con dx ≈ 0,077 y desaparece con dx = 0,066, y solo con el
+ablandamiento más profundo (S² = 0,1). Casi seguro artefacto de red. Falta el control de fusión en N = 112
+(bloque 6, solo6): si la fusión ata allí, el artefacto queda confirmado.

@@ -13,15 +13,25 @@
 #      bash barrido_ablandamiento.sh rapido   (solo los bloques 1–3 en N=80: unos 20 min)
 #      bash barrido_ablandamiento.sh solo4    (solo la formación, bloque 4: unas 1–1,5 h con 4 núcleos)
 #      bash barrido_ablandamiento.sh solo5    (¿el Q = 2 sin fusión es artefacto?: unas 1,5–2 h)
+#      bash barrido_ablandamiento.sh solo6    (control: ¿la fusión sigue atando en N = 112?: unos 30–40 min)
 # Resultados: resultados_ablandamiento/resumen.dat (una línea por ejecución) y salida en pantalla.
 set -e
 export OMP_NUM_THREADS=${OMP_NUM_THREADS:-4}
 g++ -O3 -march=native -fopenmp nucleacion_pulsos.cpp -o nucleacion_pulsos
 g++ -O3 -march=native -fopenmp nucleacion.cpp -o nucleacion
-mkdir -p resultados_ablandamiento; cd resultados_ablandamiento; [ "$1" = "solo4" ] || [ "$1" = "solo5" ] || rm -f resumen.dat
+mkdir -p resultados_ablandamiento; cd resultados_ablandamiento; [ "$1" = "solo4" ] || [ "$1" = "solo5" ] || [ "$1" = "solo6" ] || rm -f resumen.dat
 P=../nucleacion_pulsos; F=../nucleacion
 NUC="forma=toro Rt=1.0 Rp=0.35 relax=0.3 recupera=0.1"
 c() { $P "$@" | grep FINAL; }
+
+if [ "$1" = "solo6" ]; then
+echo "########## 6) control: fusión (T0 = 2) en N = 112, caja 7,4, s = 0,4 ##########"
+# En N = 112 el ablandamiento T0 = 0,9 no ató nada. Falta saber si la fusión sí ata en esa malla;
+# si no atara, el problema sería de la malla fina en general, no del ablandamiento.
+$F N=112 L=7.4 Rc=1.8 relax=0.5 cada=100 cortes=2000 lam=24 s=0.4 T0=2.0 seed=1 tag=f6_N112_T02.0_s0.4 | grep FINAL
+$F N=112 L=7.4 Rc=1.8 relax=0.5 cada=100 cortes=2000 lam=24 s=0.4 T0=0.9 seed=2 tag=f6_N112_T00.9_s0.4_sd2 | grep FINAL
+echo "== Resumen"; cat resumen.dat; exit 0
+fi
 
 if [ "$1" = "solo5" ]; then
 echo "########## 5) ¿el Q = 2 sin fusión (T0 = 0,9, s = 0,4) es artefacto de malla? ##########"
