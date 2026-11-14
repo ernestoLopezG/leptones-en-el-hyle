@@ -1,0 +1,16 @@
+Juguete 2D g-2 (rotor2d.py) — 14-11-2026
+Fuente gaussiana (sigma=1.5) girando en un circulo de radio a=8, medio con c=1.
+fraccion = L_campo(r) / L_cuasiestatico(r): momento angular del campo dentro de r
+frente al del campo estatico arrastrado rigidamente.
+
+v=0.1 (c/Om=80):  r*Om = 0.12 0.25 0.50 1.00 1.88 -> 1.03 1.05 1.12 1.27 1.44
+v=0.2 (c/Om=40):  r*Om = 0.25 0.50 1.00 2.00 3.75 -> 1.07 1.11 1.12 1.04 1.56
+v=0.4 (c/Om=20):  r*Om = 0.50 1.00 2.00 4.00 7.50 -> 1.39 1.78 2.58 3.35 4.92
+
+Lectura:
+- Para r << c/Om el campo acompaña a la fuente entera (fraccion -> 1; desviacion
+  ~0.22 r*Om a v=0.1). [N]
+- Por encima de r ~ c/Om la fraccion se separa: momento angular que se lleva
+  la radiacion (espiral saliente). El corte exterior c/Om sale solo. [N]
+- Ciclotron real: c/Om_c ~ 0.3 mm >> cualquier escala del modelo -> todo el campo
+  hasta el nudo va con la orbita. La via "fraccion arrastrada" NO reduce el 0.58 alfa.
