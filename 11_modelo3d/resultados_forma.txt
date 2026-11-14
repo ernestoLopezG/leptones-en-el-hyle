@@ -23,3 +23,12 @@ Predicción hecha ANTES de ejecutar la caja 15,5 (N = 200), con la ley 1/L ajust
   capa n_z = 0: b/a ≈ 1,228 (−0,6: 1,231; −0,3: 1,232; 0,3: 1,231).
   Si sale ≈ 1,23, sigue la tendencia y el 1,25 de la caja 12,4 era de paso.
   Si se queda en ≈ 1,245–1,25, la tendencia se ha detenido y habría que mirarlo con mucho cuidado.
+
+Resultado de la caja 15,5 (N = 200; Ernesto, 14-11-2026):
+15,5  200   548,78  1,124   3,388                     1,238  1,232  1,229  1,227  1,222  1,214
+Predicción (ley 1/L, anotada antes):                          1,231  1,232  1,228  1,231
+→ Predicción cumplida (diferencias ≤ 0,01): b/a sigue bajando como 1/L; el ≈ 1,25 de la caja 12,4 era un valor de
+  paso. La coincidencia con la elipse del toro compacto (1,245) queda descartada como resultado.
+Cautela: esta caja tampoco está relajada (E2/E4 = 1,12 > 1 y la energía sube a 548,8 frente a 545,8 en la caja 12,4;
+el nudo sigue creciendo: R_rms y los centros de las capas aumentan con la caja). Parte de la tendencia puede ser de
+relajación y no solo de caja; el límite de caja infinita y equilibrio completo sigue sin conocerse (≈ 1,14 por la ley 1/L).
