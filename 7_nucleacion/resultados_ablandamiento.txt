@@ -88,3 +88,9 @@ forzado intenso funde en la práctica (en un medio real el propio forzado podrí
 Lectura: el nudo de carga 2 sin fusión aparece con dx ≈ 0,077 y desaparece con dx = 0,066, y solo con el
 ablandamiento más profundo (S² = 0,1). Casi seguro artefacto de red. Falta el control de fusión en N = 112
 (bloque 6, solo6): si la fusión ata allí, el artefacto queda confirmado.
+
+=== Bloque 6, control (Ernesto, 14-11-2026; N=112, caja 7,4, s = 0,4) ===
+  fusión T0=2                 Q = −1,974  E = 913,7   (la fusión sigue atando en la malla fina)
+  ablandamiento T0=0,9, sd2   Q = 0       E = 1,6     (segunda semilla, tampoco ata)
+Conclusión: el Q = 2 sin fusión era un artefacto de la red. Con malla suficiente, solo la fusión ata el nudo,
+como exige la topología. Cerrado.
