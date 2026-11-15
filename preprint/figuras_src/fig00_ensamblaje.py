@@ -17,9 +17,10 @@ ax.text(1.95, 2.25, 'envolvente $\\Psi(\\mathbf{x})$\n(orbital)', color='navy', 
 verde = 'seagreen'
 for r in [1.3, 2.1, 3.0, 3.45, 3.9, 4.35]:
     t = np.linspace(0, 2*np.pi, 600)
-    rr = r + 0.045*np.sin(36*t)
+    amp_s = 0.045 if r < 2.6 else 0.045*np.exp(-(r-2.6)/0.35)   # silbido local: se apaga fuera del orbital
+    rr = r + amp_s*np.sin(36*t)
     ax.plot(rr*np.cos(t), rr*np.sin(t), color=verde, lw=1.4*min(1, 3.1/r), alpha=(0.35 if r < 2.6 else min(1, 0.9*3.1/r)))
-ax.text(-5.05, -5.0, 'campo: perturbación lineal que emite el torbellino. Parte oscilante: el silbido (tono universal,\nen el corte: no radia). Parte media: circulación secundaria con signo, $u\\propto 1/r$; su gradiente es la fuerza', color=verde, fontsize=9.5, bbox=dict(fc='white', ec='none', alpha=0.85, pad=1.5))
+ax.text(-5.05, -5.0, 'campo: respuesta lineal del medio. Parte oscilante: el silbido, algo por debajo del corte, local\n(ondulado, solo donde hay pulsación). Parte media: circulación secundaria con signo, $u\\propto 1/r$ (liso)', color=verde, fontsize=9.5, bbox=dict(fc='white', ec='none', alpha=0.85, pad=1.5))
 ax.text(-5.05, 4.75, 'pulsación (la partícula): azul, rojo y naranja; nudo: morado', color='navy', fontsize=9.5, bbox=dict(fc='white', ec='none', alpha=0.85, pad=1.5))
 # nudo (toro esquemático) desplazado del centro: el nudo recorre la envolvente
 kx, ky = 0.55, -0.35
@@ -51,10 +52,10 @@ for (p, amp, tit), rect in zip(puntos, pos_ins):
         a2.add_patch(FancyArrowPatch((0.62*np.cos(1.2), 0.62*np.sin(1.2)), (0.62*np.cos(2.1), 0.62*np.sin(2.1)),
                      connectionstyle='arc3,rad=0.35', arrowstyle='->', mutation_scale=10, color='crimson'))
     else:
-        t = np.linspace(0, 2*np.pi, 500); rr = 0.42 + 0.05*np.sin(24*t)
-        a2.plot(rr*np.cos(t), rr*np.sin(t), color='seagreen', lw=1.8)
+        t = np.linspace(0, 2*np.pi, 500)
+        a2.plot(0.42*np.cos(t), 0.42*np.sin(t), color='seagreen', lw=1.6)
         a2.add_patch(FancyArrowPatch((0.75*np.cos(1.0), 0.75*np.sin(1.0)), (0.75*np.cos(2.2), 0.75*np.sin(2.2)),
-                     connectionstyle='arc3,rad=0.3', arrowstyle='->', mutation_scale=8, color='seagreen', lw=0.9, ls='--'))
+                     connectionstyle='arc3,rad=0.3', arrowstyle='->', mutation_scale=10, color='seagreen', lw=1.4))
     a2.set_title(tit, fontsize=9, pad=1)
     con = ConnectionPatch(xyA=p, coordsA=ax.transData, xyB=(0, -1.15), coordsB=a2.transData, color='0.5', lw=0.6, ls=':')
     fig.add_artist(con)
@@ -64,7 +65,7 @@ fig.text(0.585, 0.008,
  'de la onda a lo largo de η, '
  'con máximos en las zonas de mayor índice (naranja),\n'
  'escalada con $|\\Psi(\\mathbf{x})|$. El campo (verde) existe también dentro del orbital;\n'
- 'fuera de él solo hay campo: el silbido (ondulado) y, como su parte\n'
- 'media, la circulación secundaria con signo (flecha discontinua).', fontsize=8.3)
+ 'lejos de él solo queda su parte media, la circulación secundaria con\n'
+ 'signo (flecha): el silbido es local y se apaga a pocos $\\xi_0$ de la pulsación.', fontsize=8.3)
 plt.savefig('../figuras/fig00_ensamblaje.png', dpi=160)
 print('-> ../figuras/fig00_ensamblaje.png')
