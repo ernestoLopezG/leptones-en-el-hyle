@@ -94,3 +94,12 @@ ablandamiento más profundo (S² = 0,1). Casi seguro artefacto de red. Falta el 
   ablandamiento T0=0,9, sd2   Q = 0       E = 1,6     (segunda semilla, tampoco ata)
 Conclusión: el Q = 2 sin fusión era un artefacto de la red. Con malla suficiente, solo la fusión ata el nudo,
 como exige la topología. Cerrado.
+
+=== Bloque 7: tamaño mínimo de la región fundida (Ernesto, 16-11-2026; fusión T0=2, s=0,2, caja 6,2) ===
+Radio fundido (T>1) = 0,83·Rc. Nudo ≈ 1 unidad.
+  N=80 (h=0,0775): Rc=1,8 Q=1 | 1,2 Q=2 (E=924,6) | 0,9 Q=1 | 0,6 Q=0 | 0,4 Q=0 | 0,25 Q=0
+  N=96 (h=0,065):  Rc=0,4 Q=1 (E=569,4) | 0,25 Q=0
+Lectura: con malla fina, una región fundida de radio ≈0,33 (≈5 celdas) ata el nudo; en la gruesa (≈4 celdas)
+no. El mínimo baja al afinar: compatible con que en el continuo baste una región diminuta, sin resolver el
+límite inferior (Rc=0,25 ≈ 3 celdas, no ata en ninguna). Rc=1,2 da carga 2: la carga depende también del
+tamaño de la fusión (una semilla). Posible siguiente paso: N=112 con Rc = 0,6 / 0,4 / 0,25.
