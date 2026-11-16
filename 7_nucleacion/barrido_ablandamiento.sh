@@ -14,15 +14,31 @@
 #      bash barrido_ablandamiento.sh solo4    (solo la formación, bloque 4: unas 1–1,5 h con 4 núcleos)
 #      bash barrido_ablandamiento.sh solo5    (¿el Q = 2 sin fusión es artefacto?: unas 1,5–2 h)
 #      bash barrido_ablandamiento.sh solo6    (control: ¿la fusión sigue atando en N = 112?: unos 30–40 min)
+#      bash barrido_ablandamiento.sh solo7    (tamaño mínimo de la fusión que ata el nudo: unos 45–60 min)
 # Resultados: resultados_ablandamiento/resumen.dat (una línea por ejecución) y salida en pantalla.
 set -e
 export OMP_NUM_THREADS=${OMP_NUM_THREADS:-4}
 g++ -O3 -march=native -fopenmp nucleacion_pulsos.cpp -o nucleacion_pulsos
 g++ -O3 -march=native -fopenmp nucleacion.cpp -o nucleacion
-mkdir -p resultados_ablandamiento; cd resultados_ablandamiento; [ "$1" = "solo4" ] || [ "$1" = "solo5" ] || [ "$1" = "solo6" ] || rm -f resumen.dat
+mkdir -p resultados_ablandamiento; cd resultados_ablandamiento; [ "$1" = "solo4" ] || [ "$1" = "solo5" ] || [ "$1" = "solo6" ] || [ "$1" = "solo7" ] || rm -f resumen.dat
 P=../nucleacion_pulsos; F=../nucleacion
 NUC="forma=toro Rt=1.0 Rp=0.35 relax=0.3 recupera=0.1"
 c() { $P "$@" | grep FINAL; }
+
+if [ "$1" = "solo7" ]; then
+echo "########## 7) tamaño mínimo de la región fundida que ata el nudo (fusión T0 = 2, s = 0,2) ##########"
+# T = T0·exp(−r²/Rc²): con T0 = 2 la región fundida (T > 1) tiene radio 0,83·Rc.
+# Rc = 1,8 es el control (Q = −0,98). Se reduce Rc hasta que deje de atar.
+# Ojo: con Rc pequeño la región fundida ocupa pocas celdas (h = 0,0775 en N = 80); por eso los dos
+# más pequeños se repiten en N = 96 (h = 0,065): si el resultado cambia con la malla, no es fiable.
+for rc in 1.8 1.2 0.9 0.6 0.4 0.25; do
+  $F N=80 L=6.2 Rc=$rc relax=0.5 cada=100 cortes=2000 lam=24 s=0.2 T0=2.0 seed=1 tag=f7_N80_Rc$rc | grep FINAL
+done
+for rc in 0.4 0.25; do
+  $F N=96 L=6.2 Rc=$rc relax=0.5 cada=100 cortes=2000 lam=24 s=0.2 T0=2.0 seed=1 tag=f7_N96_Rc$rc | grep FINAL
+done
+echo "== Resumen"; cat resumen.dat; exit 0
+fi
 
 if [ "$1" = "solo6" ]; then
 echo "########## 6) control: fusión (T0 = 2) en N = 112, caja 7,4, s = 0,4 ##########"
